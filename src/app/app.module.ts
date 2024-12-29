@@ -12,6 +12,8 @@ import { NavbarComponent } from './components/common/navbar/navbar.component';
 import { FooterComponent } from './components/pages/footer/footer.component';
 import { SignupComponent } from './components/pages/signup/signup.component';
 import { LoginComponent } from './components/pages/login/login.component';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -27,8 +29,10 @@ import { LoginComponent } from './components/pages/login/login.component';
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    ToastrModule.forRoot({positionClass:'toast-top-center', progressBar: true, closeButton: true}),
-    BrowserAnimationsModule
+    ToastrModule.forRoot({ positionClass: 'toast-top-center', progressBar: true, closeButton: true }),
+    BrowserAnimationsModule,
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
