@@ -1,6 +1,6 @@
 <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="#">E-Store</a>
+        <a class="navbar-brand" [routerLink]="'/home'">E-Store</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" (click)="toggle()">
             <span class="navbar-toggler-icon"></span>
@@ -14,41 +14,41 @@
                         Categories
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Fashion</a>
-                        <a class="dropdown-item" href="#">Electronics</a>
-                        <a class="dropdown-item" href="#">Appliances</a>
-                        <a class="dropdown-item" href="#">Home Decor</a>
-                        <a class="dropdown-item" href="#">Beauty & Personal Care</a>
-                        <a class="dropdown-item" href="#">Study</a>
-                        <a class="dropdown-item" href="#">Kids & Toys</a>
-                        <a class="dropdown-item" href="#">Kitchen</a>
+                        <a class="dropdown-item" [routerLink]="'/fashion'">Fashion</a>
+                        <a class="dropdown-item" [routerLink]="'/electronics'">Electronics</a>
+                        <a class="dropdown-item" [routerLink]="'/appliances'">Appliances</a>
+                        <a class="dropdown-item" [routerLink]="'/home-decor'">Home Decor</a>
+                        <a class="dropdown-item" [routerLink]="'/bpc'">Beauty & Personal Care</a>
+                        <a class="dropdown-item" [routerLink]="'/study'">Study</a>
+                        <a class="dropdown-item" [routerLink]="'/kt'">Kids & Toys</a>
+                        <a class="dropdown-item" [routerLink]="'/kitchen'">Kitchen</a>
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Mobile</a>
+                    <a class="nav-link" [routerLink]="'/electronics/mobile'">Mobile</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Grocery</a>
+                    <a class="nav-link" [routerLink]="'/electronics/laptop'">Laptop</a>
+                </li>			
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="'/fashion'">Watches</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Laptop</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Watches</a>
-                </li>
+                    <a class="nav-link" [routerLink]="'/grocery'">Grocery</a>
+                </li>					
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Login/Signup
+                        Login/Register
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Login</a>
+                        <a class="dropdown-item" [routerLink]="'/login'">Login</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Signup</a>
+                        <a class="dropdown-item" [routerLink]="'/register'">Register</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Join Prime</a>
+                        <a class="dropdown-item" [routerLink]="'/prime'">Join Prime</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Become Seller</a>
+                        <a class="dropdown-item" [routerLink]="'/seller'">Become Seller</a>
                     </div>
                 </li>
             </ul>
