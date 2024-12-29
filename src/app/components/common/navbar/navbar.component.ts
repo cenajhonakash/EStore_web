@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
+ collapse = true;
 
+ toggle() {
+  this.collapse = !this.collapse
+ }
 }

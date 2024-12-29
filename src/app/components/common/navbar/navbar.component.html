@@ -2,11 +2,11 @@
     <div class="container">
         <a class="navbar-brand" href="#">E-Store</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" (click)="toggle()">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent" [class.collapse]="collapse">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -14,31 +14,32 @@
                         Categories
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Login</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Signup</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Join Prime</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Become Seller</a>
+                        <a class="dropdown-item" href="#">Fashion</a>
+                        <a class="dropdown-item" href="#">Electronics</a>
+                        <a class="dropdown-item" href="#">Appliances</a>
+                        <a class="dropdown-item" href="#">Home Decor</a>
+                        <a class="dropdown-item" href="#">Beauty & Personal Care</a>
+                        <a class="dropdown-item" href="#">Study</a>
+                        <a class="dropdown-item" href="#">Kids & Toys</a>
+                        <a class="dropdown-item" href="#">Kitchen</a>
                     </div>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Electronics</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Mobile</a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link" href="#">Grocery</a>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Fashion</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Laptop</a>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Signup</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Watches</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Login
+                        Login/Signup
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="#">Login</a>
