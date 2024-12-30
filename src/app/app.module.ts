@@ -13,7 +13,9 @@ import { FooterComponent } from './components/pages/footer/footer.component';
 import { SignupComponent } from './components/pages/signup/signup.component';
 import { LoginComponent } from './components/pages/login/login.component';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { NetworkinterceptorService } from './service/common/networkinterceptor.service';
 
 @NgModule({
   declarations: [
@@ -32,9 +34,12 @@ import { HttpClientModule } from '@angular/common/http';
     ToastrModule.forRoot({ positionClass: 'toast-top-center', progressBar: true, closeButton: true }),
     BrowserAnimationsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatProgressBarModule
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS, useClass: NetworkinterceptorService, multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
