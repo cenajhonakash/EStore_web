@@ -128,16 +128,16 @@
                                     </label>
                                 </div>
                             </div>          
-                            <mat-progress-bar mode="indeterminate" *ngIf="_loader.isLoading | async"></mat-progress-bar>
+                            <mat-progress-bar mode="indeterminate" *ngIf="(_loader.isLoading | async)"></mat-progress-bar>
                             <div class="d-flex justify-content-center gap-4 flex-column flex-xl-row">
                                 <div class="col-6">
                                     <div class="d-grid">
-                                        <button class="btn bsb-btn-xl btn-primary" type="submit">Sign up</button>
+                                        <button [disabled]="(_loader.isLoading | async)" class="btn bsb-btn-xl btn-primary" type="submit">Sign up</button>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="d-grid">
-                                        <button class="btn bsb-btn-xl btn-success" type="reset">Reset</button>
+                                        <button [disabled]="(_loader.isLoading | async)" class="btn bsb-btn-xl btn-success" type="reset">Reset</button>
                                     </div>
                                 </div>
                             </div>
