@@ -2,7 +2,8 @@
     <div class="container">
         <a class="navbar-brand" [routerLink]="'/home'">E-Store</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" (click)="toggle()">
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+            (click)="toggle()">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -29,23 +30,27 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" [routerLink]="'/electronics/laptop'">Laptop</a>
-                </li>			
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" [routerLink]="'/fashion'">Watches</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" [routerLink]="'/grocery'">Grocery</a>
-                </li>					
+                </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Login/Register
+                    <a *ngIf="isUserLoggedIn" class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+                        role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Join Us
                     </a>
+                    <a *ngIf="!isUserLoggedIn" class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+                        role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Login/Register
+                    </a>                    
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" [routerLink]="'/login'">Login</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" [routerLink]="'/register'">Register</a>
-                        <div class="dropdown-divider"></div>
+                        <a *ngIf="!isUserLoggedIn" class="dropdown-item" [routerLink]="'/login'">Login</a>
+                        <div *ngIf="!isUserLoggedIn" class="dropdown-divider"></div>
+                        <a *ngIf="!isUserLoggedIn" class="dropdown-item" [routerLink]="'/register'">Register</a>
+                        <div *ngIf="!isUserLoggedIn" class="dropdown-divider"></div>
                         <a class="dropdown-item" [routerLink]="'/prime'">Join Prime</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" [routerLink]="'/seller'">Become Seller</a>
@@ -53,7 +58,8 @@
                 </li>
             </ul>
             <form class="d-flex" role="search">
-                <input class="form-control me-3" type="search" style="width:350px;" placeholder="What are you looking for?" aria-label="Search">
+                <input class="form-control me-3" type="search" style="width:350px;"
+                    placeholder="What are you looking for?" aria-label="Search">
                 <button class="btn btn-success" type="submit">Search</button>
             </form>
         </div>

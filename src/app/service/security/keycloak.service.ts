@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import Keycloak from 'keycloak-js';
+import { UserProfile } from 'src/app/dto/user-profile';
 
 @Injectable({
   providedIn: 'root'
@@ -7,6 +8,7 @@ import Keycloak from 'keycloak-js';
 export class KeycloakService {
 
   private _keycloak: Keycloak | undefined
+  private _userProfile: UserProfile | undefined 
 
   constructor() { }
 
@@ -18,6 +20,8 @@ export class KeycloakService {
     console.log('Intitalized Keycloak server')
     if (authenticated) {
       console.log('user authenticated successfully!')
+      this._userProfile = (await this._keycloak?.loadUserProfile()) as UserProfile
+      this._userProfile.token = this._keycloak?.token
     }
   }
 
@@ -28,9 +32,24 @@ export class KeycloakService {
       this._keycloak = new Keycloak({
         url: 'http://localhost:8888',
         realm: 'Estore_Space',
-        clientId: 'est-client-xyz-19'
+        clientId: 'EST-UI-v1-2025'
       })
     }
     return this._keycloak;
+  }
+
+  // Fetch logged in user details from Keycloak server
+  get getUserDetails() : UserProfile | undefined {
+    return this._userProfile
+  }
+
+  // login redirect
+  login() {
+    return this._keycloak?.login()
+  }
+
+  // logout redirect
+  logout() {
+    return this._keycloak?.logout()
   }
 }
