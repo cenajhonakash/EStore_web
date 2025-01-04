@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -16,6 +16,7 @@ import { FormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { NetworkinterceptorService } from './service/common/networkinterceptor.service';
+import { KeycloakService } from './service/security/keycloak.service';
 
 @NgModule({
   declarations: [
@@ -37,9 +38,22 @@ import { NetworkinterceptorService } from './service/common/networkinterceptor.s
     HttpClientModule,
     MatProgressBarModule
   ],
-  providers: [{
-    provide: HTTP_INTERCEPTORS, useClass: NetworkinterceptorService, multi: true
+  providers: [
+  {
+    provide: HTTP_INTERCEPTORS, 
+    useClass: NetworkinterceptorService, 
+    multi: true
+  }, 
+  { 
+    provide: APP_INITIALIZER, 
+    deps: [KeycloakService], 
+    useFactory: keyCloakFactory, 
+    multi: true 
   }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+export function keyCloakFactory(_kcService: KeycloakService) {
+  return () => _kcService.init()
+}
