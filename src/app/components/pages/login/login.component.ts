@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/dto/user.model';
 import { LoaderService } from 'src/app/service/common/loader.service';
@@ -16,11 +17,15 @@ export class LoginComponent implements OnInit {
   user = new User('', '', '', '', '', '', '');
 
   // constructor(private _tostr: ToastrService, private _userService: UserService, public _loader: LoaderService) { }
-  constructor(private _keycloak: KeycloakService) { }
+  constructor(private _keycloak: KeycloakService, private _router: Router) { }
 
   async ngOnInit(): Promise<void> {
-    await this._keycloak.init()
-    await this._keycloak.login()
+    if (this._keycloak.getUserDetails) {
+      this._router.navigateByUrl('/home')
+    } else { 
+      await this._keycloak.init() 
+    }
+    //await this._keycloak.login()
   }
 
   onLoginSubmit(event: SubmitEvent, signupForm: NgForm) { }

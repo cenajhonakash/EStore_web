@@ -17,6 +17,12 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { NetworkinterceptorService } from './service/common/networkinterceptor.service';
 import { KeycloakService } from './service/security/keycloak.service';
+import { CartComponent } from './components/pages/cart/cart.component';
+import { WishlistComponent } from './components/pages/wishlist/wishlist.component';
+import { OrderHistoryComponent } from './components/pages/order-history/order-history.component';
+import { ProductComponent } from './components/pages/product/product.component';
+import { StoreManagementComponent } from './components/admin/store-management/store-management.component';
+import { StoreManagerDashComponent } from './components/admin/store-manager-dash/store-manager-dash.component';
 
 @NgModule({
   declarations: [
@@ -26,13 +32,19 @@ import { KeycloakService } from './service/security/keycloak.service';
     NavbarComponent,
     FooterComponent,
     SignupComponent,
-    LoginComponent
+    LoginComponent,
+    CartComponent,
+    WishlistComponent,
+    OrderHistoryComponent,
+    ProductComponent,
+    StoreManagementComponent,
+    StoreManagerDashComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    ToastrModule.forRoot({ positionClass: 'toast-top-center', progressBar: true, closeButton: true }),
+    ToastrModule.forRoot({ positionClass: 'toast-top-center', progressBar: true, closeButton: true, timeOut:3000 }),
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,

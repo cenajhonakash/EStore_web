@@ -8,7 +8,7 @@ import { UserProfile } from 'src/app/dto/user-profile';
 export class KeycloakService {
 
   private _keycloak: Keycloak | undefined
-  private _userProfile: UserProfile | undefined 
+  private _userProfile: UserProfile | undefined
 
   constructor() { }
 
@@ -19,8 +19,9 @@ export class KeycloakService {
     })
     console.log('Intitalized Keycloak server')
     if (authenticated) {
-      console.log('user authenticated successfully!')
+      //console.log('user authenticated successfully!'+this._keycloak?.userInfo+this._keycloak?.loadUserInfo()+this._keycloak?.loadUserProfile())
       this._userProfile = (await this._keycloak?.loadUserProfile()) as UserProfile
+      //console.log('user authenticated successfully!'+JSON.stringify(this._keycloak?.tokenParsed))
       this._userProfile.token = this._keycloak?.token
     }
   }
@@ -51,5 +52,9 @@ export class KeycloakService {
   // logout redirect
   logout() {
     return this._keycloak?.logout()
+  }
+
+   public userHasRole(roleName: string) {
+    return this._keycloak?.hasRealmRole(roleName)
   }
 }
