@@ -23,6 +23,7 @@ import { OrderHistoryComponent } from './components/pages/order-history/order-hi
 import { ProductComponent } from './components/pages/product/product.component';
 import { StoreManagementComponent } from './components/admin/store-management/store-management.component';
 import { StoreManagerDashComponent } from './components/admin/store-manager-dash/store-manager-dash.component';
+import { CategoryComponent } from './components/pages/category/category.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { StoreManagerDashComponent } from './components/admin/store-manager-dash
     OrderHistoryComponent,
     ProductComponent,
     StoreManagementComponent,
-    StoreManagerDashComponent
+    StoreManagerDashComponent,
+    CategoryComponent
   ],
   imports: [
     BrowserModule,
