@@ -1,0 +1,14 @@
+.admin .sidebar {
+    width: 220px;
+    height: 100vh;
+    position: fixed;
+}
+
+.admin .sidebar .nav-link:hover{
+    background-color: #808080;
+    color: black;
+}
+
+.admin .content {
+    margin-left: 230px;
+}

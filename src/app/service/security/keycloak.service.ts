@@ -23,6 +23,9 @@ export class KeycloakService {
       this._userProfile = (await this._keycloak?.loadUserProfile()) as UserProfile
       //console.log('user authenticated successfully!'+JSON.stringify(this._keycloak?.tokenParsed))
       this._userProfile.token = this._keycloak?.token
+      this._userProfile.roles = this._keycloak?.realmAccess?.roles
+      // console.log('roles from KY: ' + this._keycloak?.realmAccess?.roles)
+      // console.log('User details: '+ this._userProfile.roles)
     }
   }
 

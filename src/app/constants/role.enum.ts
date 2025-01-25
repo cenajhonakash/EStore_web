@@ -1,0 +1,3 @@
+export enum UserRoles {
+    CUSTOMER, STORE_ASSOCIATE, STORE_ADMIN, STORE_MANAGER
+}

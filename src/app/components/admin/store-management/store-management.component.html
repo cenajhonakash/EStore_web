@@ -1,1 +1,31 @@
-<p>store-management works!</p>
+<div class="admin">
+    <div class="sidebar border bg-dark">
+        <h4 class="text-success text-center mt-1 px-2">Manage</h4>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a href="" class="nav-link text-white" [routerLink]="['/admin/category']">Add Category</a>
+            </li>
+            <li class="nav-item">
+                <a href="" class="nav-link text-white" [routerLink]="['/admin/category']">Manage Category</a>
+            </li>            
+            <li class="nav-item">
+                <a href="" class="nav-link text-white" [routerLink]="['/admin/product']">Add Product</a>
+            </li>
+            <li class="nav-item">
+                <a href="" class="nav-link text-white" [routerLink]="['/admin/product']">Manage Product</a>
+            </li>            
+            <li class="nav-item">
+                <a href="" class="nav-link text-white" [routerLink]="['/category']">Update Stock</a>
+            </li> 
+            <li class="nav-item">
+                <a href="" class="nav-link text-white" [routerLink]="['/category']">View Order</a>
+            </li>
+            <li class="nav-item">
+                <a href="" class="nav-link text-white" [routerLink]="['/category']">View Sales</a>
+            </li>                                   
+        </ul>
+    </div>
+    <div class="content px-2 py-2">
+        <router-outlet></router-outlet>
+    </div>
+</div>

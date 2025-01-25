@@ -24,6 +24,11 @@ import { ProductComponent } from './components/pages/product/product.component';
 import { StoreManagementComponent } from './components/admin/store-management/store-management.component';
 import { StoreManagerDashComponent } from './components/admin/store-manager-dash/store-manager-dash.component';
 import { CategoryComponent } from './components/pages/category/category.component';
+import { AdmindashComponent } from './components/admin/admindash/admindash.component';
+import { AddProductComponent } from './components/admin/add-product/add-product.component';
+import { AddCategoryComponent } from './components/admin/add-category/add-category.component';
+import { ViewCategoryComponent } from './components/admin/view-category/view-category.component';
+import { ViewProductComponent } from './components/admin/view-product/view-product.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +45,12 @@ import { CategoryComponent } from './components/pages/category/category.componen
     ProductComponent,
     StoreManagementComponent,
     StoreManagerDashComponent,
-    CategoryComponent
+    CategoryComponent,
+    AdmindashComponent,
+    AddProductComponent,
+    AddCategoryComponent,
+    ViewCategoryComponent,
+    ViewProductComponent
   ],
   imports: [
     BrowserModule,

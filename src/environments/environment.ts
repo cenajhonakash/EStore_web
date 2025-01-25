@@ -1,4 +1,6 @@
 export const environment = {
-    production: true,
-    baseUrl: 'http://localhost:9999'
+    production: false,
+    baseUrl: 'http://localhost:9999',
+    ios_context: '/EST-IOMS',
+    inventory_path: '/v1/inventory'
 };
