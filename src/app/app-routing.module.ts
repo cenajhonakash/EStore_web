@@ -28,14 +28,14 @@ const routes: Routes = [
   }, {
     path: "cat/all", component: CategoryComponent, title: "Estore | Categories"
   }, {
-    path: "admin", component: StoreManagementComponent, title: "Estore | Admin", canActivate: [storeManagementGuardGuard]
+    path: "admin", component: StoreManagementComponent, title: "Estore | Manage", canActivate: [storeManagementGuardGuard]
     , children: [{ path: "dash", component: AdmindashComponent }, { path: "category", component: AddCategoryComponent }, { path: "product", component: ProductComponent }
       , { path: "categories", component: ViewCategoriesComponent }, { path: "products", component: ViewProductsComponent }, { path: "sales", component: ViewSalesComponent }
       , { path: "stock", component: StockComponent }, { path: "products", component: ViewProductsComponent }, { path: "orders", component: ViewOrdersComponent }
       , { path: "approvals", component: ApprovalsComponent }
     ]
   }, {
-    path: "manage", component: StoreManagerDashComponent, title: "Estore | Manage", canActivate: [storeManagerGuardGuard]
+    path: "manage", component: StoreManagerDashComponent, title: "Estore | Manager", canActivate: [storeManagerGuardGuard]
   }];
 
 @NgModule({
