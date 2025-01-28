@@ -1,28 +1,69 @@
 <div class="admin">
-    <div class="sidebar border bg-dark">
-        <h4 class="text-success text-center mt-1 px-2">Manage</h4>
+    <div class="sidebar d-flex flex-column justify-content-between border bg-dark">
+       <!--<h4 class="text-success text-center mt-1 px-2">Manage</h4>--> 
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a href="" class="nav-link text-white" [routerLink]="['/admin/category']">Add Category</a>
+                <a href="" class="nav-link text-white" [routerLink]="['/admin/categories']" routerLinkActive="active">
+                    <i-tabler name="category"></i-tabler>
+                    <span class="ms-2 pt-1">View Categories</span>
+                </a>
+            </li>         
+            <li class="nav-item">
+                <a href="" class="nav-link text-white" [routerLink]="['/admin/category']" routerLinkActive="active">
+                    <i-tabler name="plus"></i-tabler>
+                    <span class="ms-2 pt-1">Add Category</span>
+                </a>
             </li>
             <li class="nav-item">
-                <a href="" class="nav-link text-white" [routerLink]="['/admin/category']">Manage Category</a>
+                <a href="" class="nav-link text-white" [routerLink]="['/admin/products']" routerLinkActive="active">
+                    <i-tabler name="building-store"></i-tabler>
+                    <span class="ms-2 pt-1">View Products</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="" class="nav-link text-white" [routerLink]="['/admin/product']" routerLinkActive="active">
+                    <i-tabler name="table-plus"></i-tabler>
+                    <span class="ms-2 pt-1">Product</span>
+                </a>
             </li>            
             <li class="nav-item">
-                <a href="" class="nav-link text-white" [routerLink]="['/admin/product']">Add Product</a>
+                <a href="" class="nav-link text-white" [routerLink]="['/admin/stock']" routerLinkActive="active">
+                    <i-tabler name="stack-3"></i-tabler>
+                    <span class="ms-2 pt-1">Manage Stock</span>
+                </a>
             </li>
             <li class="nav-item">
-                <a href="" class="nav-link text-white" [routerLink]="['/admin/product']">Manage Product</a>
-            </li>            
-            <li class="nav-item">
-                <a href="" class="nav-link text-white" [routerLink]="['/category']">Update Stock</a>
-            </li> 
-            <li class="nav-item">
-                <a href="" class="nav-link text-white" [routerLink]="['/category']">View Order</a>
+                <a href="" class="nav-link text-white" [routerLink]="['/admin/orders']" routerLinkActive="active">
+                    <i-tabler name="truck-delivery"></i-tabler>
+                    <span class="ms-2 pt-1">View Orders</span>
+                </a>
             </li>
             <li class="nav-item">
-                <a href="" class="nav-link text-white" [routerLink]="['/category']">View Sales</a>
-            </li>                                   
+                <a href="" class="nav-link text-white" [routerLink]="['/admin/sales']" routerLinkActive="active">
+                    <i-tabler name="report-money"></i-tabler>
+                    <span class="ms-2 pt-1">View Sales</span>
+                </a>
+            </li>         
+            <li class="nav-item">
+                <a href="" class="nav-link text-white" [routerLink]="['/admin/approvals']" routerLinkActive="active">
+                    <i-tabler name="square-rounded-check"></i-tabler>
+                    <span class="ms-2 pt-1">Approvals</span>
+                </a>
+            </li>    
+            <li class="nav-item">
+                <a href="" class="nav-link text-white">
+                    <i-tabler name="logout"></i-tabler>
+                    <span class="ms-2 pt-1">Logout</span>
+                </a>
+            </li>                          
+        </ul>
+        <ul class="nav flex-column mb-5">
+            <li class="nav-item">
+                <a href="" class="nav-link text-white" [routerLink]="['/admin/approvals']" routerLinkActive="active">
+                    <i-tabler name="help-circle"></i-tabler>
+                    <span class="ms-2">Reach Us</span>
+                </a>
+            </li>             
         </ul>
     </div>
     <div class="content px-2 py-2">

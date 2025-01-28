@@ -11,6 +11,12 @@ import { CategoryComponent } from './components/pages/category/category.componen
 import { AdmindashComponent } from './components/admin/admindash/admindash.component';
 import { AddCategoryComponent } from './components/admin/add-category/add-category.component';
 import { ProductComponent } from './components/pages/product/product.component';
+import { ViewCategoriesComponent } from './components/pages/view-categories/view-categories.component';
+import { ViewProductsComponent } from './components/pages/view-products/view-products.component';
+import { ViewSalesComponent } from './components/admin/view-sales/view-sales.component';
+import { StockComponent } from './components/admin/stock/stock.component';
+import { ViewOrdersComponent } from './components/pages/view-orders/view-orders.component';
+import { ApprovalsComponent } from './components/admin/approvals/approvals.component';
 
 const routes: Routes = [
   {
@@ -23,7 +29,11 @@ const routes: Routes = [
     path: "cat/all", component: CategoryComponent, title: "Estore | Categories"
   }, {
     path: "admin", component: StoreManagementComponent, title: "Estore | Admin", canActivate: [storeManagementGuardGuard]
-    , children: [{ path: "dash", component: AdmindashComponent}, { path: "category", component: AddCategoryComponent},{ path: "product", component: ProductComponent}]
+    , children: [{ path: "dash", component: AdmindashComponent }, { path: "category", component: AddCategoryComponent }, { path: "product", component: ProductComponent }
+      , { path: "categories", component: ViewCategoriesComponent }, { path: "products", component: ViewProductsComponent }, { path: "sales", component: ViewSalesComponent }
+      , { path: "stock", component: StockComponent }, { path: "products", component: ViewProductsComponent }, { path: "orders", component: ViewOrdersComponent }
+      , { path: "approvals", component: ApprovalsComponent }
+    ]
   }, {
     path: "manage", component: StoreManagerDashComponent, title: "Estore | Manage", canActivate: [storeManagerGuardGuard]
   }];

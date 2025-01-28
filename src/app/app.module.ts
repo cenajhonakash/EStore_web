@@ -27,8 +27,13 @@ import { CategoryComponent } from './components/pages/category/category.componen
 import { AdmindashComponent } from './components/admin/admindash/admindash.component';
 import { AddProductComponent } from './components/admin/add-product/add-product.component';
 import { AddCategoryComponent } from './components/admin/add-category/add-category.component';
-import { ViewCategoryComponent } from './components/admin/view-category/view-category.component';
-import { ViewProductComponent } from './components/admin/view-product/view-product.component';
+import { ViewCategoriesComponent } from './components/pages/view-categories/view-categories.component';
+import { ViewProductsComponent } from './components/pages/view-products/view-products.component';
+import { ViewSalesComponent } from './components/admin/view-sales/view-sales.component';
+import { ApprovalsComponent } from './components/admin/approvals/approvals.component';
+import { StockComponent } from './components/admin/stock/stock.component';
+import { ViewOrdersComponent } from './components/pages/view-orders/view-orders.component';
+import { IconModule } from './components/common/icon.module';
 
 @NgModule({
   declarations: [
@@ -49,8 +54,12 @@ import { ViewProductComponent } from './components/admin/view-product/view-produ
     AdmindashComponent,
     AddProductComponent,
     AddCategoryComponent,
-    ViewCategoryComponent,
-    ViewProductComponent
+    ViewCategoriesComponent,
+    ViewProductsComponent,
+    ViewSalesComponent,
+    ApprovalsComponent,
+    StockComponent,
+    ViewOrdersComponent
   ],
   imports: [
     BrowserModule,
@@ -60,7 +69,8 @@ import { ViewProductComponent } from './components/admin/view-product/view-produ
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    IconModule
   ],
   providers: [
   {

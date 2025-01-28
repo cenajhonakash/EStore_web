@@ -9,6 +9,11 @@
     color: black;
 }
 
+.admin .sidebar .nav-link.active{
+    background-color: #808080;
+    color: black;
+}
+
 .admin .content {
     margin-left: 230px;
 }
