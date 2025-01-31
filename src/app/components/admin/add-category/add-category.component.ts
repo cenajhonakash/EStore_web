@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CategoryRequest } from 'src/app/dto/inventory/request/category-request.model';
 import { LoaderService } from 'src/app/service/common/loader.service';
@@ -14,7 +15,7 @@ export class AddCategoryComponent {
 
   category: CategoryRequest = new CategoryRequest('', '', '')
 
-  constructor(private _toast: ToastrService, private _categoryService: CategoryService, public _loader: LoaderService) { }
+  constructor(private _toast: ToastrService, private _categoryService: CategoryService, public _loader: LoaderService, private _router: Router) { }
 
   onFormSubmit(event: SubmitEvent, addCategoryForm: NgForm) {
     event.preventDefault();
@@ -26,6 +27,7 @@ export class AddCategoryComponent {
         {
           next: (data) => {
             this._toast.success('Added succesfully!!!')
+            this._router.navigate(['/admin/categories'])
           },
           error: error => {
             console.log('error creating category' + error)

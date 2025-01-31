@@ -6,5 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./view-categories.component.css']
 })
 export class ViewCategoriesComponent {
-
+  categories = [{ name: 'Cloth', about: 'Cloth', coverImage: 'https://images.pexels.com/photos/1884581/pexels-photo-1884581.jpeg?auto=compress&cs=tinysrgb&w=600' }
+    ,{ name: 'Cloth', about: 'Cloth', coverImage: 'https://images.pexels.com/photos/1884581/pexels-photo-1884581.jpeg?auto=compress&cs=tinysrgb&w=600' }
+    ,{ name: 'Cloth', about: 'Cloth', coverImage: 'https://images.pexels.com/photos/1884581/pexels-photo-1884581.jpeg?auto=compress&cs=tinysrgb&w=600' }
+  ]
 }
