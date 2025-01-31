@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { CategoryResponse } from 'src/app/dto/inventory/response/category.model';
+import { LoaderService } from 'src/app/service/common/loader.service';
 import { CategoryService } from 'src/app/service/inventory/category.service';
+import { AppHelper } from 'src/app/util/helper';
 
 @Component({
   selector: 'app-view-categories',
@@ -11,9 +13,12 @@ import { CategoryService } from 'src/app/service/inventory/category.service';
 export class ViewCategoriesComponent implements OnInit {
 
   categories: CategoryResponse[] = []
-  constructor(private _toast: ToastrService, private _categoryService: CategoryService) { }
+  isAdmin: any;
+
+  constructor(private _toast: ToastrService, private _categoryService: CategoryService, public _loader: LoaderService, private _helper: AppHelper) { }
 
   ngOnInit(): void {
+    this.isAdmin = this._helper.isRoleAdmin()
     this._categoryService.getCategories().subscribe({
       next: (data) => {
         this.categories = data

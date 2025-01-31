@@ -8,3 +8,11 @@
     height: 400px;
 
 } */
+.loading-indicator {
+    position: relative;
+    margin-top: 30%;
+}
+
+.card:hover {
+    background: #e2e2e2;
+}

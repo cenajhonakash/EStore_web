@@ -1,6 +1,9 @@
 <div class="row">
+    <div class="loading-indicator" *ngIf="(_loader.isLoading | async)">
+        <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+    </div>
     <div class="col-md-4 mb-4" *ngFor="let c of categories">
-        <div class="card">
+        <div class="card shadow-sm">
             <img [src]="c.coverImage" class="card-img-top cover-image" alt="Category" />
             <div class="card-body">
                 <h5 class="card-title">{{c.name}}</h5>
@@ -9,10 +12,16 @@
                     <h6>
                         <span>Total Products: {{c.products.length}}</span>
                     </h6>
-                    <div>
-                        <button class="btn btn-primary btn-sm">View</button>
-                        <button class="btn btn-secondary btn-sm ms-2">Edit</button>
+                    <div  *ngIf="isAdmin; else normal">
+                        <button class="btn btn-info btn-sm">View</button>
+                        <button class="btn btn-warning btn-sm ms-2">Edit</button>
+                        <button class="btn btn-danger btn-sm ms-2">Delete</button>
                     </div>
+                    <ng-template #normal>
+                        <div class="row text-center px-3">
+                            <button class="btn btn-info btn-sm">View Products</button>
+                        </div>
+                    </ng-template>
                 </div>
             </div>
         </div>
