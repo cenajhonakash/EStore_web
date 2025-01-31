@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ApiPath } from 'src/app/constants/api-path';
-import { CategoryResponse } from 'src/app/dto/inventory/category.model';
+import { CategoryResponse } from 'src/app/dto/inventory/response/category.model';
 import { environment } from 'src/environments/environment';
 
 @Component({

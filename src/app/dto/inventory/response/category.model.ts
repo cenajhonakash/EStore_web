@@ -1,4 +1,4 @@
-import { Item } from "./item.model";
+import { Item } from "../item.model";
 
 export class CategoryResponse {
   constructor(
@@ -10,6 +10,6 @@ export class CategoryResponse {
   ) { }
 }
 
-export interface CategoryResponse{
-  categories: CategoryResponse[]
-}
+// export interface CategoryResponse {
+//   categories: CategoryResponse[]
+// }

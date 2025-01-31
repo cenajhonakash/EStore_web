@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiPath } from 'src/app/constants/api-path';
-import { CategoryResponse } from 'src/app/dto/inventory/category.model';
+import { CategoryResponse } from 'src/app/dto/inventory/response/category.model';
 import { CategoryRequest } from 'src/app/dto/inventory/request/category-request.model';
 import { environment } from 'src/environments/environment';
 
@@ -15,7 +15,7 @@ export class CategoryService {
   constructor(private _http: HttpClient) { }
 
   getCategories() {
-    return this._http.get<CategoryResponse>(this.url);
+    return this._http.get<CategoryResponse[]>(this.url);
   }
 
   addCategory(category: CategoryRequest) {
