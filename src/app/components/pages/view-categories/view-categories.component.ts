@@ -1,6 +1,7 @@
 import { Component, OnInit, signal, TemplateRef, WritableSignal } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { CategoryRequest } from 'src/app/dto/inventory/request/category-request.model';
 import { CategoryResponse } from 'src/app/dto/inventory/response/category.model';
 import { LoaderService } from 'src/app/service/common/loader.service';
 import { CategoryService } from 'src/app/service/inventory/category.service';
@@ -16,6 +17,7 @@ export class ViewCategoriesComponent implements OnInit {
   categories: CategoryResponse[] = []
   pickedCategory?: CategoryResponse
   isAdmin: any;
+  toUpdateCategory: CategoryRequest = new CategoryRequest('', '', '')
 
   constructor(private _toast: ToastrService, private _categoryService: CategoryService, public _loader: LoaderService, private _helper: AppHelper, private modalService: NgbModal) { }
 
@@ -53,6 +55,27 @@ export class ViewCategoriesComponent implements OnInit {
           error: error => {
             console.log('error creating category' + error)
             this._toast.error('Error deleting category: ' + category.name, 'Warning', { positionClass: 'toast-center-center', timeOut: 3000 })
+          }
+        })
+      });
+  }
+
+  updateCategory(content: any, category: CategoryResponse) {
+    this.pickedCategory = category
+    const ind = this.categories.indexOf(category);
+    //this.toUpdateCategory = category
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', centered: true })
+      .result.then((result) => {
+        // Call service
+        this._categoryService.updateCategory(this.toUpdateCategory, category.id).subscribe({
+          next: (data) => {
+            this._toast.success('Updated category: ' + category.name, 'Success', { positionClass: 'toast-center-center', timeOut: 3000 })       
+            this.categories[ind] = data
+            this.modalService.dismissAll();
+          },
+          error: error => {
+            console.log('error updating category' + error)
+            this._toast.error('Error updating category: ' + category.name, 'Warning', { positionClass: 'toast-center-center', timeOut: 3000 })
           }
         })
       });

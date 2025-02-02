@@ -14,8 +14,9 @@
                     </h6>
                     <div *ngIf="isAdmin; else normal">
                         <button class="btn btn-info btn-sm" (click)="open(content, c)">View</button>
-                        <button class=" btn btn-warning btn-sm ms-2" (click)="open(content, c)">Edit</button>
-                        <button class=" btn btn-danger btn-sm ms-2" (click)="deleteCategory(askBeforeDeleting, c)">Delete</button>
+                        <button class=" btn btn-warning btn-sm ms-2" (click)="updateCategory(update, c)">Edit</button>
+                        <button class=" btn btn-danger btn-sm ms-2"
+                            (click)="deleteCategory(askBeforeDeleting, c)">Delete</button>
                     </div>
                     <ng-template #normal>
                         <div class=" row text-center px-3">
@@ -58,15 +59,48 @@
     </div>
     <div class="modal-body">
         <p>
-            <strong>Are you sure you want to delete the category: <span class="text-primary">{{pickedCategory?.name}}</span></strong>
+            <strong>Are you sure you want to delete the category: <span
+                    class="text-primary">{{pickedCategory?.name}}</span></strong>
         </p>
         <p>
-            All information associated to this category profile will be permanently deleted. It is suggested to disable it either.
+            All information associated to this category profile will be permanently deleted. It is suggested to disable
+            it either.
             <span class="text-danger">This operation can not be undone.</span>
         </p>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancel</button>
         <button type="button" class="btn btn-danger" (click)="modal.close('Ok click')">Ok</button>
+    </div>
+</ng-template>
+
+<ng-template #update let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Update Category</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <div class="mb-3">
+            <label for="categoryTitle" class="form-label">Category Title<span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="categoryTitle" placeholder="{{pickedCategory!.name}}"
+                [(ngModel)]="toUpdateCategory.title" name="title" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="description" class="form-label">Description<span class="text-danger">*</span></label>
+            <textarea class="form-control" id="description" rows="4" placeholder="{{pickedCategory!.about}}"
+                [(ngModel)]="toUpdateCategory.description" name="description" required></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="coverImage" class="form-label">Cover Image URL</label>
+            <input type="text" class="form-control" id="coverImage" placeholder="{{pickedCategory!.coverImage}}"
+                [(ngModel)]="toUpdateCategory.coverImage" name="coverImage">
+        </div>
+        <mat-progress-bar mode="indeterminate" *ngIf="(_loader.isLoading | async)"></mat-progress-bar>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="modal.close()">Save</button>
     </div>
 </ng-template>

@@ -27,4 +27,8 @@ export class CategoryService {
   deleteCategory(cId: String) {
     return this._http.delete<CategoryResponse>(this.url + '/' + cId);
   }
+
+  updateCategory(category: CategoryRequest, cId: any) {
+    return this._http.put<CategoryResponse>(this.url + '/' + cId, category, { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) });
+  }
 }
