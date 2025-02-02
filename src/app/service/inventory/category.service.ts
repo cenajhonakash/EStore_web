@@ -23,4 +23,8 @@ export class CategoryService {
     //this._http.post<CategoryResponse>('http://Jyoti:8585/v1/inventory/category', category, { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) });
     return this._http.post<CategoryResponse>(this.url, category, { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) });
   }
+
+  deleteCategory(cId: String) {
+    return this._http.delete<CategoryResponse>(this.url + '/' + cId);
+  }
 }

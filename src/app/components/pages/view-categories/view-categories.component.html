@@ -12,13 +12,13 @@
                     <h6>
                         <span>Total Products: {{c.products.length}}</span>
                     </h6>
-                    <div  *ngIf="isAdmin; else normal">
-                        <button class="btn btn-info btn-sm">View</button>
-                        <button class="btn btn-warning btn-sm ms-2">Edit</button>
-                        <button class="btn btn-danger btn-sm ms-2">Delete</button>
+                    <div *ngIf="isAdmin; else normal">
+                        <button class="btn btn-info btn-sm" (click)="open(content, c)">View</button>
+                        <button class=" btn btn-warning btn-sm ms-2" (click)="open(content, c)">Edit</button>
+                        <button class=" btn btn-danger btn-sm ms-2" (click)="deleteCategory(askBeforeDeleting, c)">Delete</button>
                     </div>
                     <ng-template #normal>
-                        <div class="row text-center px-3">
+                        <div class=" row text-center px-3">
                             <button class="btn btn-info btn-sm">View Products</button>
                         </div>
                     </ng-template>
@@ -27,3 +27,46 @@
         </div>
     </div>
 </div>
+
+<!-- Popup modal for view, delete & edit-->
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">{{pickedCategory?.name}}</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <div class="img-container">
+            <img class="cover-image" src="{{pickedCategory?.coverImage}}">
+        </div>
+        <p class="mt-2">{{pickedCategory?.about}}</p>
+    </div>
+    <div class="modal-footer d-flex justify-content-around align-items-center">
+        <h6>Total Sales: 50000$</h6>
+        <div>
+            <button type="button" class="btn btn-primary btn-sm">Add Item</button>
+            <button type="button" class="btn btn-warning btn-sm ms-2">Disable</button>
+            <button type="button" class="btn btn-secondary btn-sm ms-2">View Sales</button>
+
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #askBeforeDeleting let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Remove Category</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <p>
+            <strong>Are you sure you want to delete the category: <span class="text-primary">{{pickedCategory?.name}}</span></strong>
+        </p>
+        <p>
+            All information associated to this category profile will be permanently deleted. It is suggested to disable it either.
+            <span class="text-danger">This operation can not be undone.</span>
+        </p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancel</button>
+        <button type="button" class="btn btn-danger" (click)="modal.close('Ok click')">Ok</button>
+    </div>
+</ng-template>
