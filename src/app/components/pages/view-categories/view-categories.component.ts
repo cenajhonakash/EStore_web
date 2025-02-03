@@ -60,24 +60,19 @@ export class ViewCategoriesComponent implements OnInit {
       });
   }
 
-  updateCategory(content: any, category: CategoryResponse) {
-    this.pickedCategory = category
-    const ind = this.categories.indexOf(category);
-    //this.toUpdateCategory = category
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', centered: true })
-      .result.then((result) => {
-        // Call service
-        this._categoryService.updateCategory(this.toUpdateCategory, category.id).subscribe({
-          next: (data) => {
-            this._toast.success('Updated category: ' + category.name, 'Success', { positionClass: 'toast-center-center', timeOut: 3000 })       
-            this.categories[ind] = data
-            this.modalService.dismissAll();
-          },
-          error: error => {
-            console.log('error updating category' + error)
-            this._toast.error('Error updating category: ' + category.name, 'Warning', { positionClass: 'toast-center-center', timeOut: 3000 })
-          }
-        })
-      });
+  updateCategory(category: CategoryRequest, id: String) {
+    // Call service
+    this._categoryService.updateCategory(this.toUpdateCategory, id).subscribe({
+      next: (data) => {
+        this._toast.success('Updated category: ' + this.pickedCategory!.name, 'Success', { positionClass: 'toast-center-center', timeOut: 3000 })
+        const ind = this.categories.findIndex(c => c.id == this.pickedCategory!.id);
+        this.categories[ind] = data
+        this.modalService.dismissAll();
+      },
+      error: error => {
+        console.log('error updating category' + error)
+        this._toast.error('Error updating category: ' + this.pickedCategory!.name, 'Warning', { positionClass: 'toast-center-center', timeOut: 3000 })
+      }
+    });
   }
 }

@@ -14,7 +14,7 @@
                     </h6>
                     <div *ngIf="isAdmin; else normal">
                         <button class="btn btn-info btn-sm" (click)="open(content, c)">View</button>
-                        <button class=" btn btn-warning btn-sm ms-2" (click)="updateCategory(update, c)">Edit</button>
+                        <button class=" btn btn-warning btn-sm ms-2" (click)="open(update, c)">Edit</button>
                         <button class=" btn btn-danger btn-sm ms-2"
                             (click)="deleteCategory(askBeforeDeleting, c)">Delete</button>
                     </div>
@@ -76,31 +76,43 @@
 
 <ng-template #update let-modal>
     <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Update Category</h4>
+        <h5 class="modal-title" id="modal-basic-title">Update | {{pickedCategory!.name}}</h5>
         <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
     </div>
-    <div class="modal-body">
-        <div class="mb-3">
-            <label for="categoryTitle" class="form-label">Category Title<span class="text-danger">*</span></label>
-            <input type="text" class="form-control" id="categoryTitle" placeholder="{{pickedCategory!.name}}"
-                [(ngModel)]="toUpdateCategory.title" name="title" required>
+    <form id="categoryForm">
+        <div class="modal-body">
+            <!-- div to show details -->
+            <div class="view">
+                <div class="image-container">
+                    <img class="cover-image" [src]="pickedCategory?.coverImage" alt="" />
+                </div>
+                <p class="mt-2">
+                    {{ pickedCategory?.about }}
+                </p>
+            </div>
+            <div class="mb-3">
+                <label for="categoryTitle" class="form-label">Category Title<span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="categoryTitle" placeholder="Enter new category name"
+                    [(ngModel)]="toUpdateCategory.title" name="title" required>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description<span class="text-danger">*</span></label>
+                <textarea class="form-control" id="description" rows="4" placeholder="Enter new description"
+                    [(ngModel)]="toUpdateCategory.description" name="description" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="coverImage" class="form-label">Cover Image URL</label>
+                <input type="text" class="form-control" id="coverImage" placeholder="New image link"
+                    [(ngModel)]="toUpdateCategory.coverImage" name="coverImage">
+            </div>
+            <mat-progress-bar mode="indeterminate" *ngIf="(_loader.isLoading | async)"></mat-progress-bar>
         </div>
-
-        <div class="mb-3">
-            <label for="description" class="form-label">Description<span class="text-danger">*</span></label>
-            <textarea class="form-control" id="description" rows="4" placeholder="{{pickedCategory!.about}}"
-                [(ngModel)]="toUpdateCategory.description" name="description" required></textarea>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-primary"
+                (click)="modal.dismiss('cancel click')">Cancel</button>
+            <button type="button" class="btn btn-warning"
+                (click)="updateCategory(toUpdateCategory, pickedCategory!.id)">Save</button>
+            <button type="reset" class="btn btn-secondary ms-2">Reset</button>
         </div>
-
-        <div class="mb-3">
-            <label for="coverImage" class="form-label">Cover Image URL</label>
-            <input type="text" class="form-control" id="coverImage" placeholder="{{pickedCategory!.coverImage}}"
-                [(ngModel)]="toUpdateCategory.coverImage" name="coverImage">
-        </div>
-        <mat-progress-bar mode="indeterminate" *ngIf="(_loader.isLoading | async)"></mat-progress-bar>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancel</button>
-        <button type="button" class="btn btn-primary" (click)="modal.close()">Save</button>
-    </div>
+    </form>
 </ng-template>
