@@ -34,6 +34,8 @@ import { ApprovalsComponent } from './components/admin/approvals/approvals.compo
 import { StockComponent } from './components/admin/stock/stock.component';
 import { ViewOrdersComponent } from './components/pages/view-orders/view-orders.component';
 import { IconModule } from './components/common/icon.module';
+import { StoreModule } from '@ngrx/store';
+import { categoryReducer } from './store/inventory/category.reducer';
 
 @NgModule({
   declarations: [
@@ -65,25 +67,26 @@ import { IconModule } from './components/common/icon.module';
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    ToastrModule.forRoot({ positionClass: 'toast-top-center', progressBar: true, closeButton: true, timeOut:3000 }),
+    ToastrModule.forRoot({ positionClass: 'toast-top-center', progressBar: true, closeButton: true, timeOut: 3000 }),
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
     MatProgressBarModule,
-    IconModule
+    IconModule,
+    StoreModule.forRoot({ categories: categoryReducer })
   ],
   providers: [
-  {
-    provide: HTTP_INTERCEPTORS, 
-    useClass: NetworkinterceptorService, 
-    multi: true
-  }, 
-  { 
-    provide: APP_INITIALIZER, 
-    deps: [KeycloakService], 
-    useFactory: keyCloakFactory, 
-    multi: true 
-  }],
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: NetworkinterceptorService,
+      multi: true
+    },
+    {
+      provide: APP_INITIALIZER,
+      deps: [KeycloakService],
+      useFactory: keyCloakFactory,
+      multi: true
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -17,6 +17,7 @@ import { ViewSalesComponent } from './components/admin/view-sales/view-sales.com
 import { StockComponent } from './components/admin/stock/stock.component';
 import { ViewOrdersComponent } from './components/pages/view-orders/view-orders.component';
 import { ApprovalsComponent } from './components/admin/approvals/approvals.component';
+import { AddProductComponent } from './components/admin/add-product/add-product.component';
 
 const routes: Routes = [
   {
@@ -29,7 +30,7 @@ const routes: Routes = [
     path: "cat/all", component: CategoryComponent, title: "Estore | Categories"
   }, {
     path: "admin", component: StoreManagementComponent, title: "Estore | Manage", canActivate: [storeManagementGuardGuard]
-    , children: [{ path: "dash", component: AdmindashComponent }, { path: "category", component: AddCategoryComponent }, { path: "product", component: ProductComponent }
+    , children: [{ path: "dash", component: AdmindashComponent }, { path: "category", component: AddCategoryComponent }, { path: "product", component: AddProductComponent }
       , { path: "categories", component: ViewCategoriesComponent }, { path: "products", component: ViewProductsComponent }, { path: "sales", component: ViewSalesComponent }
       , { path: "stock", component: StockComponent }, { path: "products", component: ViewProductsComponent }, { path: "orders", component: ViewOrdersComponent }
       , { path: "approvals", component: ApprovalsComponent }
