@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
+import { ItemRequest } from 'src/app/dto/inventory/request/item-request.model';
 import { CategoryResponse } from 'src/app/dto/inventory/response/category.model';
 import { LoaderService } from 'src/app/service/common/loader.service';
 import { CategoryService } from 'src/app/service/inventory/category.service';
@@ -12,7 +14,10 @@ import { setCategories } from 'src/app/store/inventory/category.action';
   styleUrls: ['./add-product.component.css']
 })
 export class AddProductComponent implements OnInit {
+
+  product: ItemRequest = new ItemRequest();
   categories: CategoryResponse[] = []
+
   constructor(private _toast: ToastrService, private _categoryService: CategoryService, public _loader: LoaderService, private _cStore: Store<{ categories: CategoryResponse[] }>) { }
 
   ngOnInit(): void {
@@ -38,5 +43,15 @@ export class AddProductComponent implements OnInit {
         }
       }
     });
+  }
+
+  onSubmit(event: SubmitEvent, productForm: NgForm) {
+    event.preventDefault();
+    if (productForm.invalid) {
+      console.log('Invalid product' + this.product)
+      this._toast.error('Fields marked with * are mandatory!', 'Warning', { positionClass: 'toast-center-center', timeOut: 3000 });
+    } else {
+
+    }
   }
 }
