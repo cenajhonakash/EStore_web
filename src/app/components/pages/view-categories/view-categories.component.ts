@@ -2,7 +2,7 @@ import { Component, OnInit, signal, TemplateRef, WritableSignal } from '@angular
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { select, Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
-import { take } from 'rxjs';
+import { switchMap, take } from 'rxjs';
 import { CategoryRequest } from 'src/app/dto/inventory/request/category-request.model';
 import { CategoryResponse } from 'src/app/dto/inventory/response/category.model';
 import { LoaderService } from 'src/app/service/common/loader.service';

@@ -27,10 +27,8 @@ export class AddProductComponent implements OnInit {
     this._cStore.select("categories").subscribe({
       next: categories => {
         if (categories.length > 0) {
-          console.log('add-p category already in store')
           this.categories = categories
         } else {
-          console.log('add-p Loading category from backend')
           // Service call
           this._categoryService.getCategories().subscribe({
             next: (data) => {
@@ -57,7 +55,7 @@ export class AddProductComponent implements OnInit {
       this._productService.addProduct(this.product).subscribe(
         {
           next: (data) => {
-
+            console.log('Added product')
             const ind = this.categories.findIndex(cat => cat.id === this.product.category + '');
             const catexis = this.categories[ind];
             const newCat = new CategoryResponse(catexis.name, catexis.about, catexis.coverImage, catexis.id, this.categories[ind].products.concat(data));
