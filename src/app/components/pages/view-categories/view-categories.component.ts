@@ -1,7 +1,8 @@
 import { Component, OnInit, signal, TemplateRef, WritableSignal } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
+import { take } from 'rxjs';
 import { CategoryRequest } from 'src/app/dto/inventory/request/category-request.model';
 import { CategoryResponse } from 'src/app/dto/inventory/response/category.model';
 import { LoaderService } from 'src/app/service/common/loader.service';
@@ -26,12 +27,14 @@ export class ViewCategoriesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.log('Inside view cat init')
     this.isAdmin = this._helper.isRoleAdmin()
     this._cStore.select("categories").subscribe({
       next: categories => {
         if (categories.length > 0) {
           console.log('category already in store')
           this.categories = categories
+          //console.log('All Categories: '+ JSON.stringify(this.categories))
         } else {
           console.log('Loading category from backend')
           // Service call
@@ -67,6 +70,7 @@ export class ViewCategoriesComponent implements OnInit {
             this._toast.success('Deleted category: ' + category.name, 'Success', { positionClass: 'toast-center-center', timeOut: 3000 })
             this.modalService.dismissAll();
             this.categories = this.categories.filter(c => c.id != category.id);
+            this._cStore.dispatch(setCategories({ categories: this.categories }))
           },
           error: error => {
             console.log('error creating category' + error)
@@ -83,6 +87,7 @@ export class ViewCategoriesComponent implements OnInit {
         this._toast.success('Updated category: ' + this.pickedCategory!.name, 'Success', { positionClass: 'toast-center-center', timeOut: 3000 })
         const ind = this.categories.findIndex(c => c.id == this.pickedCategory!.id);
         this.categories[ind] = data
+        this._cStore.dispatch(setCategories({ categories: this.categories }))
         this.modalService.dismissAll();
       },
       error: error => {

@@ -57,6 +57,14 @@ export class AddProductComponent implements OnInit {
       this._productService.addProduct(this.product).subscribe(
         {
           next: (data) => {
+
+            const ind = this.categories.findIndex(cat => cat.id === this.product.category + '');
+            const catexis = this.categories[ind];
+            const newCat = new CategoryResponse(catexis.name, catexis.about, catexis.coverImage, catexis.id, this.categories[ind].products.concat(data));
+
+            this.categories = this.categories.filter(cat => cat.id != this.product.category + '').concat(newCat);
+            this._cStore.dispatch(setCategories({ categories: this.categories }))
+            
             this._toast.success('Product Added succesfully!!!')
             this._router.navigate(['/admin/categories'])
           },

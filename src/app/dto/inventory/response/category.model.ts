@@ -1,4 +1,4 @@
-import { Item } from "../item.model";
+import { ItemResponse } from "./product.model";
 
 export class CategoryResponse {
   constructor(
@@ -6,7 +6,7 @@ export class CategoryResponse {
     public about: string,
     public coverImage: string,
     public id: string,
-    public products: Item[]
+    public products: ItemResponse[]
   ) { }
 }
 

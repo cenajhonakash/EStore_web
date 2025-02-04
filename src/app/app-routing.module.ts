@@ -21,6 +21,9 @@ import { AddProductComponent } from './components/admin/add-product/add-product.
 
 const routes: Routes = [
   {
+    path: "", component: HomeComponent, title: "Home | Estore"
+  },
+  {
     path: "home", component: HomeComponent, title: "Home | Estore"
   }, {
     path: "login", component: LoginComponent, title: "Estore | Login"
