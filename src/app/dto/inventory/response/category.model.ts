@@ -6,7 +6,8 @@ export class CategoryResponse {
     public about: string,
     public coverImage: string,
     public id: string,
-    public products: ItemResponse[]
+    public products: ItemResponse[],
+    public images: String[]
   ) { }
 }
 

@@ -8,6 +8,7 @@ export class ItemResponse {
     public discountPercent = 0.0,
     public quantity = 0,
     public image: string,
-    public type: string
+    public type: string,
+    public images: String[]
   ) { }
 }
