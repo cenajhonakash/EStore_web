@@ -43,9 +43,13 @@
         <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body">
-        <div class="img-container">
-            <img class="cover-image" src="{{pickedCategory?.coverImage}}">
-        </div>
+        <ngb-carousel>
+            <ng-template ngbSlide *ngFor="let im of pickedCategory?.images">
+                <div class="picsum-img-wrapper">
+                    <img [src]="im" class="card-img-top cover-image" alt="Random first slide" />
+                </div>
+            </ng-template>
+        </ngb-carousel>
         <p class="mt-2">{{pickedCategory?.about}}</p>
     </div>
     <div class="modal-footer d-flex justify-content-around align-items-center">
@@ -90,9 +94,13 @@
         <div class="modal-body">
             <!-- div to show details -->
             <div class="view">
-                <div class="image-container">
-                    <img class="cover-image" [src]="pickedCategory?.coverImage" alt="" />
-                </div>
+                <ngb-carousel>
+                    <ng-template ngbSlide *ngFor="let im of pickedCategory?.images">
+                        <div class="picsum-img-wrapper">
+                            <img [src]="im" class="card-img-top cover-image" alt="Random first slide" />
+                        </div>
+                    </ng-template>
+                </ngb-carousel>
                 <p class="mt-2">
                     {{ pickedCategory?.about }}
                 </p>
