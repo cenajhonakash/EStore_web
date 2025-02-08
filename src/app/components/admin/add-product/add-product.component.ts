@@ -59,7 +59,7 @@ export class AddProductComponent implements OnInit {
             console.log('Added product')
             const ind = this.categories.findIndex(cat => cat.id === this.product.category + '');
             const catexis = this.categories[ind];
-            const newCat = new CategoryResponse(catexis.name, catexis.about, catexis.coverImage, catexis.id, this.categories[ind].products.concat(data), catexis.images);
+            const newCat = new CategoryResponse(catexis.name, catexis.about, catexis.coverImage, catexis.id, this.categories[ind].products.concat(data), catexis.images, catexis.totalItems);
 
             this.categories = this.categories.filter(cat => cat.id != this.product.category + '').concat(newCat);
             this._cStore.dispatch(setCategories({ categories: this.categories }))
