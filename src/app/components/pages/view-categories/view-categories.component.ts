@@ -41,7 +41,8 @@ export class ViewCategoriesComponent implements OnInit {
           this._categoryService.getCategories().subscribe({
             next: (data) => {
               this.categories = data
-              this._cStore.dispatch(setCategories({ categories: this.categories }))
+              if (this.categories.length > 0)
+                this._cStore.dispatch(setCategories({ categories: this.categories }))
             },
             error: error => {
               console.log('error loading category' + error)

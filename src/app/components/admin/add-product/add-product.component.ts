@@ -33,7 +33,8 @@ export class AddProductComponent implements OnInit {
           this._categoryService.getCategories().subscribe({
             next: (data) => {
               this.categories = data
-              this._cStore.dispatch(setCategories({ categories: this.categories }))
+              if (this.categories.length > 0)
+                this._cStore.dispatch(setCategories({ categories: this.categories }))
             },
             error: error => {
               console.log('error loading category' + error)
@@ -62,7 +63,7 @@ export class AddProductComponent implements OnInit {
 
             this.categories = this.categories.filter(cat => cat.id != this.product.category + '').concat(newCat);
             this._cStore.dispatch(setCategories({ categories: this.categories }))
-            
+
             this._toast.success('Product Added succesfully!!!')
             this._router.navigate(['/admin/categories'])
           },
