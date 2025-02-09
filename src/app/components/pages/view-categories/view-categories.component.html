@@ -17,7 +17,7 @@
                 <p class="card-text">{{c.about | slice : 0 : 50}}</p>
                 <div class="d-flex justify-content-between align-items-center">
                     <h6>
-                        <span>Total Products: {{c.totalItems}}</span>
+                        <span>Total Products: {{c.totalItems ? c.totalItems : 0}}</span>
                     </h6>
                     <div *ngIf="isAdmin; else normal">
                         <button class="btn btn-info btn-sm" (click)="open(content, c)">View</button>
@@ -55,7 +55,8 @@
     <div class="modal-footer d-flex justify-content-around align-items-center">
         <h6>Total Sales: 50000$</h6>
         <div>
-            <button type="button" class="btn btn-primary btn-sm">Add Item</button>
+            <button type="button" class="btn btn-primary btn-sm" [routerLink]="['/admin/product', pickedCategory!.id]">Add
+                Item</button>
             <button type="button" class="btn btn-warning btn-sm ms-2">Manage Stock</button>
             <button type="button" class="btn btn-secondary btn-sm ms-2">View Sales</button>
 

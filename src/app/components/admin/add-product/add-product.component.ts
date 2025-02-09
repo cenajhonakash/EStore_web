@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
 import { ItemRequest } from 'src/app/dto/inventory/request/item-request.model';
@@ -19,8 +20,11 @@ export class AddProductComponent implements OnInit {
 
   product: ItemRequest = new ItemRequest();
   categories: CategoryResponse[] = []
+  cId: any;
+  pickedCat: any;
 
-  constructor(private _toast: ToastrService, private _categoryService: CategoryService, public _loader: LoaderService, private _cStore: Store<{ categories: CategoryResponse[] }>, private _productService: ProductService, private _router: Router) { }
+  constructor(private _toast: ToastrService, private _categoryService: CategoryService, public _loader: LoaderService, private _cStore: Store<{ categories: CategoryResponse[] }>
+    , private _productService: ProductService, private _router: Router, private _route: ActivatedRoute, private _modalService: NgbModal) { }
 
   ngOnInit(): void {
     console.log('Inside add product')
@@ -28,11 +32,14 @@ export class AddProductComponent implements OnInit {
       next: categories => {
         if (categories.length > 0) {
           this.categories = categories
+          console.log('Loaded from store')
         } else {
+          console.log('Loaded from service')
           // Service call
           this._categoryService.getCategories().subscribe({
             next: (data) => {
               this.categories = data
+              console.log('categories total from service ' + this.categories.length)
               if (this.categories.length > 0)
                 this._cStore.dispatch(setCategories({ categories: this.categories }))
             },
@@ -40,10 +47,23 @@ export class AddProductComponent implements OnInit {
               console.log('error loading category' + error)
               this._toast.error('Error loading category', 'Warning', { positionClass: 'toast-center-center', timeOut: 2000 })
             }
-          })
+          });
         }
       }
     });
+
+    this.cId = this._route.snapshot.paramMap.get('cId')
+    console.log('category id from router: ' + this.cId)
+    if (this.cId) {
+      // console.log('categories total ' + this.categories.length)
+      const ind = this.categories.findIndex(cat => cat.id === this.cId);
+      // console.log('Index from cat: ' + ind)
+      const catexis = this.categories[ind];
+      // console.log('category from router: ' + JSON.stringify(catexis))
+      this.pickedCat = { 'name': catexis.name, 'id': catexis.id }
+      console.log('category from router: ' + JSON.stringify(this.pickedCat))
+      this._modalService.dismissAll()
+    }
   }
 
   onSubmit(event: SubmitEvent, productForm: NgForm) {
@@ -56,7 +76,7 @@ export class AddProductComponent implements OnInit {
       this._productService.addProduct(this.product).subscribe(
         {
           next: (data) => {
-            console.log('Added product')
+            console.log('Adding product')
             const ind = this.categories.findIndex(cat => cat.id === this.product.category + '');
             const catexis = this.categories[ind];
             const newCat = new CategoryResponse(catexis.name, catexis.about, catexis.coverImage, catexis.id, this.categories[ind].products.concat(data), catexis.images, catexis.totalItems);

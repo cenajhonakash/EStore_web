@@ -81,10 +81,14 @@
                             <label for="category">Category<span class="text-danger">*</span></label>
                             <select class="form-control" id="category" [(ngModel)]="product.category" name="category"
                                 required>
-                                <option value="NA">NA</option>
-                                <option *ngFor="let category of categories" [value]="category.id">
-                                    {{ category.name }}
+                                <option *ngIf="pickedCat; else other_opt" [value]="pickedCat.id">{{pickedCat.name}}
                                 </option>
+                                <ng-template #other_opt>
+                                    <option value="NA">NA</option>
+                                    <option *ngFor="let category of categories" [value]="category.id" >
+                                        {{ category.name }}
+                                    </option>
+                                </ng-template>
                             </select>
 
                         </div>
