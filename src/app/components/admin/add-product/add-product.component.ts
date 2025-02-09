@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
+import { ImageDetails } from 'src/app/dto/imageDetails.model';
 import { ItemRequest } from 'src/app/dto/inventory/request/item-request.model';
 import { CategoryResponse } from 'src/app/dto/inventory/response/category.model';
 import { LoaderService } from 'src/app/service/common/loader.service';
@@ -22,6 +23,7 @@ export class AddProductComponent implements OnInit {
   categories: CategoryResponse[] = []
   cId: any;
   pickedCat: any;
+  images: ImageDetails[] = [];
 
   constructor(private _toast: ToastrService, private _categoryService: CategoryService, public _loader: LoaderService, private _cStore: Store<{ categories: CategoryResponse[] }>
     , private _productService: ProductService, private _router: Router, private _route: ActivatedRoute, private _modalService: NgbModal) { }
@@ -39,7 +41,7 @@ export class AddProductComponent implements OnInit {
           this._categoryService.getCategories().subscribe({
             next: (data) => {
               this.categories = data
-              console.log('categories total from service ' + this.categories.length)
+              //console.log('categories total from service ' + JSON.stringify(this.categories))
               if (this.categories.length > 0)
                 this._cStore.dispatch(setCategories({ categories: this.categories }))
             },
@@ -73,13 +75,22 @@ export class AddProductComponent implements OnInit {
       this._toast.error('Fields marked with * are mandatory!', 'Warning', { positionClass: 'toast-center-center', timeOut: 3000 });
     } else {
       console.log('product is ' + JSON.stringify(this.product))
-      this._productService.addProduct(this.product).subscribe(
+      this._productService.addProduct(this.product, this.images!).subscribe(
         {
           next: (data) => {
-            console.log('Adding product')
-            const ind = this.categories.findIndex(cat => cat.id === this.product.category + '');
+            console.log('Added product')
+            let ind: any;
+            if (this.pickedCat) {
+              ind = this.categories.findIndex(cat => cat.id === this.pickedCat.id + '');
+            } else {
+              ind = this.categories.findIndex(cat => cat.id === this.product.category + '');
+            }
+            console.log('index is: ' + ind)
             const catexis = this.categories[ind];
-            const newCat = new CategoryResponse(catexis.name, catexis.about, catexis.coverImage, catexis.id, this.categories[ind].products.concat(data), catexis.images, catexis.totalItems);
+            // console.log('Category is : '+JSON.stringify(catexis))
+            const itemCount: number = +catexis.totalItems + 1
+            const newCat = new CategoryResponse(catexis.name, catexis.about, catexis.coverImage, catexis.id, [], catexis.images, itemCount + '');
+            // const newCat = new CategoryResponse(catexis.name, catexis.about, catexis.coverImage, catexis.id, this.categories[ind] ? this.categories[ind].products.concat(data) : [data], catexis.images, catexis.totalItems);
 
             this.categories = this.categories.filter(cat => cat.id != this.product.category + '').concat(newCat);
             this._cStore.dispatch(setCategories({ categories: this.categories }))
@@ -93,6 +104,26 @@ export class AddProductComponent implements OnInit {
           }
         }
       );
+    }
+  }
+
+  // Handle image selection
+  onImageChange(event: any) {
+    const files: FileList = event.target.files;
+    if (files.length > 0) {
+      this.images = Array.from(files).map(file => {
+        if (file.type != 'image/png' && file.type != 'image/jpeg' && file.type != 'image/webp') {
+          this._toast.warning('Format not supported for file: ' + file.name, 'Warning', { positionClass: 'toast-center-center', timeOut: 3000 })
+        } else if (file.size > 60000) { // 30000 = 30KB
+          this._toast.warning('Size not supported for file: ' + file.name, 'Warning', { positionClass: 'toast-center-center', timeOut: 3000 })
+        }
+        else {
+          const pu = URL.createObjectURL(file);
+          const imgD: ImageDetails = { previewImage: pu, file: file }
+          return imgD
+        }
+        return { previewImage: '', file: undefined }
+      }).filter(file => file.previewImage != '');
     }
   }
 }

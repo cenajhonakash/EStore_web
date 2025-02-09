@@ -33,6 +33,8 @@
                         required [(ngModel)]="product.description" name="description"></textarea>
                 </div>
 
+                <mat-progress-bar mode="indeterminate" *ngIf="(_loader.isLoading | async)"></mat-progress-bar>
+
                 <div class="row mt-3">
                     <div class="col-md-6">
                         <!-- Discount Percent -->
@@ -66,10 +68,28 @@
 
                     <div class="col-md-6">
                         <!-- Image URL -->
-                        <div class="form-group">
+                        <!--<div class="form-group">
                             <label for="imageUrl">Image URL</label>
                             <input type="url" class="form-control" id="imageUrl" placeholder="Enter image URL"
                                 [(ngModel)]="product.imageUrl" name="imageUrl" />
+                        </div>-->
+
+                        <!-- Pick Images -->
+                        <div class="form-group">
+                            <label for="images">Select Images</label>
+                            <input type="file" id="images" name="images" class="form-control"
+                                (change)="onImageChange($event)" multiple />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Preview Image -->
+                <div *ngIf="images!.length > 0" class="text-center mt-2">
+                    <h5>Selected Images:</h5>
+                    <div class="d-flex flex-wrap">
+                        <div class="mr-3 mb-3" *ngFor="let img of images">
+                            <img [src]="img.previewImage" alt="Image Preview" width="100" height="100"
+                                class="img-thumbnail" />
                         </div>
                     </div>
                 </div>
@@ -85,7 +105,7 @@
                                 </option>
                                 <ng-template #other_opt>
                                     <option value="NA">NA</option>
-                                    <option *ngFor="let category of categories" [value]="category.id" >
+                                    <option *ngFor="let category of categories" [value]="category.id">
                                         {{ category.name }}
                                     </option>
                                 </ng-template>
@@ -109,10 +129,10 @@
 
                 <div class="d-flex justify-content-center mt-3">
                     <!-- Submit Button -->
-                    <button type="submit" class="btn btn-success btn-block" [disabled]="!productForm.valid">
+                    <button type="submit" class="btn btn-success btn-block" [disabled]="!productForm.valid || (_loader.isLoading | async)">
                         Add Product
                     </button>
-                    <button type="reset" class="btn btn-primary btn-block ms-2">
+                    <button type="reset" class="btn btn-primary btn-block ms-2" [disabled]="(_loader.isLoading | async)">
                         Reset
                     </button>
                 </div>
