@@ -1,0 +1,13 @@
+.cover-image {
+    height: 350px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.card:hover {
+    background: #e2e2e2;
+}
+
+.card {
+    max-height: fit-content;
+}

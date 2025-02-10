@@ -15,8 +15,8 @@ export class ProductService {
 
   constructor(private _http: HttpClient) { }
 
-  getProducts() {
-
+  getAllProducts() {
+    return this._http.get<ItemResponse[]>(this.url);
   }
 
   addProduct(product: ItemRequest, images: ImageDetails[]) {
