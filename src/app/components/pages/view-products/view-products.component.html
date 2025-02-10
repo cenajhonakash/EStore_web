@@ -25,7 +25,6 @@
                             <strong>Price: </strong>
                             <span class="price">{{ c.price }} INR </span>
                             <span *ngIf="c.discountPercent" class="discount ml-3">- {{ c.discountPercent }}%</span>
-
                         </p>
                         <p class="card-text"><strong>Quantity: </strong>{{c.quantity}}</p>
                         <!--<p class="card-text"><strong>Price: </strong>{{c.price}}</p>-->
@@ -44,17 +43,113 @@
     </div>
     <div class="modal-body">
         <p class="mt-2"><strong>Name: </strong>{{pickedItem?.name}}</p>
-        <p class="mt-2"><strong>Price: </strong>{{pickedItem?.price}}</p>
-        <p class="mt-2"><strong>Discount: </strong>{{pickedItem?.discountPercent}}</p>
-        <p class="mt-2"><strong>Quantity: </strong>{{pickedItem?.quantity}}</p>
+        <div class="row">
+            <div class="col-6">
+                <p class="mt-2"><strong>Price: </strong>{{pickedItem?.price}} INR</p>
+            </div>
+            <div class="col-6">
+                <p class="mt-2"><strong>Discount: </strong>{{pickedItem?.discountPercent}} %</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <p class="mt-2"><strong>Quantity: </strong>{{pickedItem?.quantity}}</p>
+            </div>
+            <div class="col-6">
+                <p class="mt-2"><strong>In Stock: </strong>{{pickedItem?.quantity}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <p class="mt-2"><strong>Total Sold: </strong>{{pickedItem?.quantity}}</p>
+            </div>
+            <div class="col-6">
+                <p class="mt-2"><strong>Active: </strong>Yes</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <p class="mt-2"><strong>Created: </strong>{{pickedItem?.addedDate | date:"dd/MM/yyyy"}}</p>
+            </div>
+            <div class="col-6" *ngIf="pickedItem?.updateDate">
+                <p class="mt-2"><strong>Last Modified: </strong>{{pickedItem!.updateDate | date:"dd/MM/yyyy"}}</p>
+            </div>
+        </div>
         <p class="mt-2"><strong>About: </strong>{{pickedItem?.description}}</p>
     </div>
     <div class="modal-footer d-flex justify-content-around align-items-center">
-        <h6>Total Sales: 50000$</h6>
         <div>
-            <button type="button" class="btn btn-primary btn-sm">Edit</button>
+            <button type="button" class="btn btn-primary btn-sm" (click)="open(update, pickedItem!)">Update</button>
             <button type="button" class="btn btn-warning btn-sm ms-2">Manage Stock</button>
             <button type="button" class="btn btn-secondary btn-sm ms-2">View Sales</button>
         </div>
     </div>
+</ng-template>
+
+<ng-template #update let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="modal-basic-title">Update | {{pickedItem!.name}}</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <form id="categoryForm">
+        <div class="modal-body">
+            <div class="row mt-2">
+                <div class="col-6">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="name" placeholder="Enter new item name"
+                        [(ngModel)]="toUpdateItem.name" name="name">
+                </div>
+                <div class="col-6">
+                    <label for="brand" class="form-label">Brand</label>
+                    <input type="text" class="form-control" id="brand" placeholder="Enter brand name"
+                        [(ngModel)]="toUpdateItem.brand" name="brand">
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-6">
+                    <label for="price" class="form-label">Price</label>
+                    <input type="text" class="form-control" id="price" placeholder="Enter updated price"
+                        [(ngModel)]="toUpdateItem.price" name="price">
+                </div>
+                <div class="col-6">
+                    <label for="discount" class="form-label">Discount</label>
+                    <input type="text" class="form-control" id="discount" placeholder="Enter discount percentage"
+                        [(ngModel)]="toUpdateItem.discountPercent" name="discount">
+                </div>
+            </div>
+            <mat-progress-bar mode="indeterminate" *ngIf="(_loader.isLoading | async)"></mat-progress-bar>
+            <div class="row">
+                <div class="col-6 mt-2">
+                    <label for="quantity" class="form-label">Quantity</label>
+                    <input type="text" class="form-control" id="quantity" placeholder="Enter quantity"
+                        [(ngModel)]="toUpdateItem.quantity" name="quantity">
+                </div>
+
+                <div class="col-6 form-group  mt-3">
+                    <label for="category">Active<span class="text-danger">*</span></label>
+                    <select class="form-control" id="activeOrNot" name="activeOrNot" required>
+                        <option value="YES">YES</option>
+                        <option value="NO">NO</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row form-group mt-2 ms-1">
+                <label for="images">Select Images</label>
+                <input type="file" id="images" name="images" class="form-control" placeholder="Choose images"
+                    (change)="onImageChange($event)" multiple />
+            </div>
+            <div class="row mt-2">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" id="description" rows="4" placeholder="Enter new description"
+                    [(ngModel)]="toUpdateItem.description" name="description" required></textarea>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-primary"
+                (click)="modal.dismiss('cancel click')">Cancel</button>
+            <button type="button" class="btn btn-warning" (click)="updateProduct(pickedItem!.itemId)">Save</button>
+            <button type="reset" class="btn btn-secondary ms-2">Reset</button>
+        </div>
+    </form>
 </ng-template>
