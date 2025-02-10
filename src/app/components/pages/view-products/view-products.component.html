@@ -3,7 +3,7 @@
         <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
     </div>
     <div class="col-md-6 mb-4" *ngFor="let c of products">
-        <div class="card shadow-sm">
+        <div class="card shadow-sm" (click)="open(manage, c)">
             <!--<img [src]="c.coverImage" class="card-img-top cover-image" alt="Category" />-->
             <div class="row">
                 <div class="col-5">
@@ -17,10 +17,7 @@
                 </div>
                 <div class="col-7">
                     <div class="card-body">
-                        <h6 class="card-title mt-1">
-                            <a href="#" (click)="open(manage, c)"></a>
-                            <strong>{{c.name}}</strong>
-                        </h6>
+                        <h6 class="card-title mt-1"><strong>{{c.name}}</strong></h6>
                         <!--<p class="card-text">{{c.description | slice : 0 : 50}}</p>-->
                         <p class="card-text"><strong>Brand: </strong>{{c.brand}}</p>
                         <!-- <p class="card-text d-flex align-items-center"> -->
@@ -41,101 +38,23 @@
 </div>
 
 <ng-template #manage let-modal>
-
-</ng-template>
-<!-- Popup modal for view, delete & edit-->
-<!--<ng-template #content let-modal>
     <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">{{pickedItem?.name}}</h4>
+        <h4 class="modal-title" id="modal-basic-title"><strong>Brand: </strong>{{pickedItem?.brand}}</h4>
         <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body">
-        <ngb-carousel>
-            <ng-template ngbSlide *ngFor="let im of pickedItem?.images">
-                <div class="picsum-img-wrapper">
-                    <img [src]="im" class="card-img-top cover-image" alt="Random first slide" />
-                </div>
-            </ng-template>
-        </ngb-carousel>
-        <p class="mt-2">{{pickedItem?.about}}</p>
+        <p class="mt-2"><strong>Name: </strong>{{pickedItem?.name}}</p>
+        <p class="mt-2"><strong>Price: </strong>{{pickedItem?.price}}</p>
+        <p class="mt-2"><strong>Discount: </strong>{{pickedItem?.discountPercent}}</p>
+        <p class="mt-2"><strong>Quantity: </strong>{{pickedItem?.quantity}}</p>
+        <p class="mt-2"><strong>About: </strong>{{pickedItem?.description}}</p>
     </div>
     <div class="modal-footer d-flex justify-content-around align-items-center">
         <h6>Total Sales: 50000$</h6>
         <div>
-            <button type="button" class="btn btn-primary btn-sm" [routerLink]="['/admin/product', pickedItem!.id]">Add
-                Item</button>
+            <button type="button" class="btn btn-primary btn-sm">Edit</button>
             <button type="button" class="btn btn-warning btn-sm ms-2">Manage Stock</button>
             <button type="button" class="btn btn-secondary btn-sm ms-2">View Sales</button>
-
         </div>
     </div>
 </ng-template>
-
-<ng-template #askBeforeDeleting let-modal>
-    <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Remove Category</h4>
-        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-    </div>
-    <div class="modal-body">
-        <p>
-            <strong>Are you sure you want to delete the category: <span
-                    class="text-primary">{{pickedItem?.name}}</span></strong>
-        </p>
-        <p>
-            All information associated to this category profile will be permanently deleted. It is suggested to disable
-            it either.
-            <span class="text-danger">This operation can not be undone.</span>
-        </p>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancel</button>
-        <button type="button" class="btn btn-danger" (click)="modal.close('Ok click')">Ok</button>
-    </div>
-</ng-template>
-
-<ng-template #update let-modal>
-    <div class="modal-header">
-        <h5 class="modal-title" id="modal-basic-title">Update | {{pickedItem!.name}}</h5>
-        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-    </div>
-    <form id="categoryForm">
-        <div class="modal-body">
-            <div class="view">
-                <ngb-carousel>
-                    <ng-template ngbSlide *ngFor="let im of pickedItem?.images">
-                        <div class="picsum-img-wrapper">
-                            <img [src]="im" class="card-img-top cover-image" alt="Random first slide" />
-                        </div>
-                    </ng-template>
-                </ngb-carousel>
-                <p class="mt-2">
-                    {{ pickedItem?.about }}
-                </p>
-            </div>
-            <div class="mb-3">
-                <label for="categoryTitle" class="form-label">Category Title<span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="categoryTitle" placeholder="Enter new category name"
-                    [(ngModel)]="toUpdateItem.title" name="title" required>
-            </div>
-            <div class="mb-3">
-                <label for="description" class="form-label">Description<span class="text-danger">*</span></label>
-                <textarea class="form-control" id="description" rows="4" placeholder="Enter new description"
-                    [(ngModel)]="toUpdateItem.description" name="description" required></textarea>
-            </div>
-            <div class="mb-3">
-                <label for="coverImage" class="form-label">Cover Image URL</label>
-                <input type="text" class="form-control" id="coverImage" placeholder="New image link"
-                    [(ngModel)]="toUpdateItem.coverImage" name="coverImage">
-            </div>
-            <mat-progress-bar mode="indeterminate" *ngIf="(_loader.isLoading | async)"></mat-progress-bar>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-outline-primary"
-                (click)="modal.dismiss('cancel click')">Cancel</button>
-            <button type="button" class="btn btn-warning"
-                (click)="updateItem(toUpdateItem, pickedItem!.id)">Save</button>
-            <button type="reset" class="btn btn-secondary ms-2">Reset</button>
-        </div>
-    </form>
-</ng-template>
--->

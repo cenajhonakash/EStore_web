@@ -39,7 +39,10 @@ export class ViewProductsComponent implements OnInit {
   }
 
   open(content: any, item: ItemResponse) {
-    //throw new Error('Method not implemented.');
+    console.log('Inside open Item modal')
+    this.pickedItem = item
+    console.log('Picked item is: ' + JSON.stringify(this.pickedItem))
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', centered: true });
   }
 
   deleteItem(content: any, item: ItemResponse) {
