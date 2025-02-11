@@ -9,6 +9,7 @@ import { ItemResponse } from 'src/app/dto/inventory/response/product.model';
 import { LoaderService } from 'src/app/service/common/loader.service';
 import { CategoryService } from 'src/app/service/inventory/category.service';
 import { ProductService } from 'src/app/service/inventory/product.service';
+import { setProducts } from 'src/app/store/inventory/product.action';
 import { AppHelper } from 'src/app/util/helper';
 
 @Component({
@@ -26,26 +27,36 @@ export class ViewProductsComponent implements OnInit {
   images: ImageDetails[] = [];
 
   constructor(private _toast: ToastrService, private _categoryService: CategoryService, public _loader: LoaderService, private _helper: AppHelper, private modalService: NgbModal
-    , private _cStore: Store<{ categories: CategoryResponse[] }>, private _productService: ProductService) { }
+    , private _pStore: Store<{ products: ItemResponse[] }>, private _productService: ProductService) { }
 
   ngOnInit(): void {
-    this._productService.getAllProducts().subscribe({
-      next: (data) => {
-        this.products = data
-        //if (this.products.length > 0)
-        //this._cStore.dispatch(setCategories({ categories: this.categories }))
-      },
-      error: (error) => {
-        console.log('error loading category' + error)
-        this._toast.error('Error loading category', 'Warning', { positionClass: 'toast-center-center', timeOut: 3000 })
+    this._pStore.select("products").subscribe({
+      next: products => {
+        if (products.length > 0) {
+          console.log('Products already in store')
+          this.products = products
+        } else {
+          console.log('Loading category from backend')
+          this._productService.getAllProducts().subscribe({
+            next: (data) => {
+              this.products = data
+              if (this.products.length > 0)
+                this._pStore.dispatch(setProducts({ products: this.products }))
+            },
+            error: (error) => {
+              console.log('error loading category' + error)
+              this._toast.error('Error loading category', 'Warning', { positionClass: 'toast-center-center', timeOut: 3000 })
+            }
+          });
+        }
       }
-    });
+    })
   }
 
   open(content: any, item: ItemResponse) {
-    console.log('Inside open Item modal')
+    // console.log('Inside open Item modal')
     this.pickedItem = item
-    console.log('Picked item is: ' + JSON.stringify(this.pickedItem))
+    //console.log('Picked item is: ' + JSON.stringify(this.pickedItem))
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', centered: true });
   }
 

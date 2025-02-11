@@ -36,6 +36,7 @@ import { ViewOrdersComponent } from './components/pages/view-orders/view-orders.
 import { IconModule } from './components/common/icon.module';
 import { StoreModule } from '@ngrx/store';
 import { categoryReducer } from './store/inventory/category.reducer';
+import { productReducer } from './store/inventory/product.reducer';
 
 @NgModule({
   declarations: [
@@ -73,7 +74,7 @@ import { categoryReducer } from './store/inventory/category.reducer';
     HttpClientModule,
     MatProgressBarModule,
     IconModule,
-    StoreModule.forRoot({ categories: categoryReducer })
+    StoreModule.forRoot({ categories: categoryReducer, products: productReducer })
   ],
   providers: [
     {

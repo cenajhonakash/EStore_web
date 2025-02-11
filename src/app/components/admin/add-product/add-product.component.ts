@@ -2,15 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
+import { lastValueFrom, take } from 'rxjs';
 import { ImageDetails } from 'src/app/dto/imageDetails.model';
 import { ItemRequest } from 'src/app/dto/inventory/request/item-request.model';
 import { CategoryResponse } from 'src/app/dto/inventory/response/category.model';
+import { ItemResponse } from 'src/app/dto/inventory/response/product.model';
 import { LoaderService } from 'src/app/service/common/loader.service';
 import { CategoryService } from 'src/app/service/inventory/category.service';
 import { ProductService } from 'src/app/service/inventory/product.service';
 import { setCategories } from 'src/app/store/inventory/category.action';
+import { setProducts } from 'src/app/store/inventory/product.action';
 
 @Component({
   selector: 'app-add-product',
@@ -19,14 +22,14 @@ import { setCategories } from 'src/app/store/inventory/category.action';
 })
 export class AddProductComponent implements OnInit {
 
-  product: ItemRequest = new ItemRequest(undefined,'','','',undefined, undefined, undefined, '');
+  product: ItemRequest = new ItemRequest(undefined, '', '', '', undefined, undefined, undefined, '');
   categories: CategoryResponse[] = []
   cId: any;
   pickedCat: any;
   images: ImageDetails[] = [];
 
   constructor(private _toast: ToastrService, private _categoryService: CategoryService, public _loader: LoaderService, private _cStore: Store<{ categories: CategoryResponse[] }>
-    , private _productService: ProductService, private _router: Router, private _route: ActivatedRoute, private _modalService: NgbModal) { }
+    , private _productService: ProductService, private _router: Router, private _route: ActivatedRoute, private _modalService: NgbModal, private _pStore: Store<{ products: ItemResponse[] }>) { }
 
   ngOnInit(): void {
     console.log('Inside add product')
@@ -95,6 +98,8 @@ export class AddProductComponent implements OnInit {
             this.categories = this.categories.filter(cat => cat.id != this.product.category + '').concat(newCat);
             this._cStore.dispatch(setCategories({ categories: this.categories }))
 
+            this.validateAndAddProductToStore(data);
+            
             this._toast.success('Product Added succesfully!!!')
             this._router.navigate(['/admin/categories'])
           },
@@ -125,5 +130,16 @@ export class AddProductComponent implements OnInit {
         return { previewImage: '', file: undefined }
       }).filter(file => file.previewImage != '');
     }
+  }
+
+  private validateAndAddProductToStore(data: ItemResponse) {
+    console.log('inside private method validateAndAddProductToStore')
+    var currentCategories = lastValueFrom(this._pStore.pipe(select("products"), take(1)));
+    currentCategories.then((result) => {
+      console.log('Inside promise resolutin')
+      if (result.length > 0) {
+        this._pStore.dispatch(setProducts({ products: result.concat(data) }));
+      }
+    });
   }
 }
