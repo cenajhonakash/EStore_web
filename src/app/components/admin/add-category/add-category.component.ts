@@ -45,6 +45,7 @@ export class AddCategoryComponent {
       );
     }
   }
+  
   // Handle image selection
   onImageChange(event: any) {
     const files: FileList = event.target.files;

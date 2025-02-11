@@ -22,7 +22,7 @@ export class ViewProductsComponent implements OnInit {
   products: ItemResponse[] = []
   pickedItem?: ItemResponse
   isAdmin: any;
-  toUpdateItem: ItemRequest = new ItemRequest();
+  toUpdateItem: ItemRequest = new ItemRequest(undefined, '', '', '', undefined, undefined, undefined, '')
   images: ImageDetails[] = [];
 
   constructor(private _toast: ToastrService, private _categoryService: CategoryService, public _loader: LoaderService, private _helper: AppHelper, private modalService: NgbModal
@@ -37,7 +37,7 @@ export class ViewProductsComponent implements OnInit {
       },
       error: (error) => {
         console.log('error loading category' + error)
-        this._toast.error('Error loading category', 'Warning', { positionClass: 'toast-center-center', timeOut: 2000 })
+        this._toast.error('Error loading category', 'Warning', { positionClass: 'toast-center-center', timeOut: 3000 })
       }
     });
   }
@@ -50,7 +50,18 @@ export class ViewProductsComponent implements OnInit {
   }
 
   updateProduct(itemId: string) {
-    //throw new Error('Method not implemented.');
+    console.log('Update req body: ' + JSON.stringify(this.toUpdateItem))
+    this._productService.updateProduct(itemId, this.toUpdateItem, this.images).subscribe({
+      next: (data) => {
+        console.log('Succesfully updated product: ' + JSON.stringify(data))
+        this._toast.success('Succesfully updated product: ' + this.pickedItem?.name, 'Warning', { positionClass: 'toast-center-center', timeOut: 3000 })
+        this.modalService.dismissAll()
+      },
+      error: (error) => {
+        console.log('error updating product' + error)
+        this._toast.error('Error updating product: ' + this.pickedItem?.name, 'Warning', { positionClass: 'toast-center-center', timeOut: 3000 })
+      }
+    })
   }
 
   // Handle image selection
@@ -58,7 +69,7 @@ export class ViewProductsComponent implements OnInit {
     const files: FileList = event.target.files;
     if (files.length > 0) {
       this.images = Array.from(files).map(file => {
-        if (file.type != 'image/png' && file.type != 'image/jpeg') {
+        if (file.type != 'image/png' && file.type != 'image/jpeg' && file.type != 'image/webp') {
           this._toast.warning('Format not supported for file: ' + file.name, 'Warning', { positionClass: 'toast-center-center', timeOut: 3000 })
         } else if (file.size > 60000) { // 30000 = 30KB
           this._toast.warning('Size not supported for file: ' + file.name, 'Warning', { positionClass: 'toast-center-center', timeOut: 3000 })

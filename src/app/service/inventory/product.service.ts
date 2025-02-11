@@ -27,4 +27,13 @@ export class ProductService {
     });
     return this._http.post<ItemResponse>(this.url, fdata);
   }
+
+  updateProduct(itemId: string, product: ItemRequest, images: ImageDetails[]) {
+    const fdata = new FormData()
+    fdata.append('product', new Blob([JSON.stringify(product)], { type: 'application/json' }));
+    images.forEach(file => {
+      fdata.append('otherImages', file!.file as Blob, file.file!.name)
+    });
+    return this._http.put<ItemResponse>(this.url + '/' + itemId, fdata);
+  }
 }

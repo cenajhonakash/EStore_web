@@ -19,7 +19,7 @@ import { setCategories } from 'src/app/store/inventory/category.action';
 })
 export class AddProductComponent implements OnInit {
 
-  product: ItemRequest = new ItemRequest();
+  product: ItemRequest = new ItemRequest(undefined,'','','',undefined, undefined, undefined, '');
   categories: CategoryResponse[] = []
   cId: any;
   pickedCat: any;

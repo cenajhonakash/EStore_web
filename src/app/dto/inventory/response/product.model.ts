@@ -9,6 +9,7 @@ export class ItemResponse {
     public quantity = 0,
     public image: string,
     public type: string,
+    public cId: string,
     public addedDate: any,
     public updateDate: any,
     public images: String[]
