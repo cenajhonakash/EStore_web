@@ -24,7 +24,7 @@
                         <p class="card-text">
                             <strong>Price: </strong>
                             <span class="price">{{ c.price }} INR </span>
-                            <span *ngIf="c.discountPercent" class="discount ml-3">- {{ c.discountPercent }}%</span>
+                            <span *ngIf="c.discountPercent" class="discount ml-3 text-danger"><strong>- {{ c.discountPercent }}%</strong></span>
                         </p>
                         <p class="card-text"><strong>Quantity: </strong>{{c.quantity}}</p>
                         <!--<p class="card-text"><strong>Price: </strong>{{c.price}}</p>-->
@@ -64,7 +64,7 @@
                 <p class="mt-2"><strong>Total Sold: </strong>{{pickedItem?.quantity}}</p>
             </div>
             <div class="col-6">
-                <p class="mt-2"><strong>Active: </strong>Yes</p>
+                <p class="mt-2"><strong>Active: </strong>{{pickedItem?.active ? 'YES' : 'NO'}}</p>
             </div>
         </div>
         <div class="row">
@@ -126,7 +126,7 @@
                 </div>
 
                 <div class="col-6 form-group  mt-3">
-                    <label for="category">Active<span class="text-danger">*</span></label>
+                    <label for="category">Disable<span class="text-danger">*</span></label>
                     <select class="form-control" id="activeOrNot" name="activeOrNot" required>
                         <option value="YES">YES</option>
                         <option value="NO">NO</option>
@@ -153,6 +153,13 @@
                 <input type="checkbox" class="form-check-input" id="deleteImage" [checked]="toUpdateItem.deleteOldImages" (change)="toUpdateItem.deleteOldImages = !toUpdateItem.deleteOldImages">
                 <label class="form-check-label" for="deleteImage">
                     Delete previous image
+                </label>
+            </div>
+
+            <div class="form-check mt-3">
+                <input type="checkbox" class="form-check-input" id="deleteImage" [checked]="toUpdateItem.active" (change)="toUpdateItem.active = !toUpdateItem.active">
+                <label class="form-check-label" for="deleteImage">
+                    Active
                 </label>
             </div>
 

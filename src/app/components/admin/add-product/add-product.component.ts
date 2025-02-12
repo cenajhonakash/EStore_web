@@ -99,13 +99,13 @@ export class AddProductComponent implements OnInit {
             this._cStore.dispatch(setCategories({ categories: this.categories }))
 
             this.validateAndAddProductToStore(data);
-            
+
             this._toast.success('Product Added succesfully!!!')
             this._router.navigate(['/admin/categories'])
           },
           error: error => {
             console.log('error adding item' + error)
-            this._toast.error('Error addin item', 'Warning', { positionClass: 'toast-center-center', timeOut: 3000 })
+            this._toast.error('Error adding item', 'Warning', { positionClass: 'toast-center-center', timeOut: 3000 })
           }
         }
       );

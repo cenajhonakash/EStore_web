@@ -42,6 +42,9 @@
         <h4 class="modal-title" id="modal-basic-title">{{pickedCategory?.name}}</h4>
         <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
     </div>
+    <div class="modal-header">
+        <h6 class="modal-title text-center text-danger">Total Sales: 50000$</h6>
+    </div>
     <div class="modal-body">
         <ngb-carousel>
             <ng-template ngbSlide *ngFor="let im of pickedCategory?.images">
@@ -53,10 +56,13 @@
         <p class="mt-2">{{pickedCategory?.about}}</p>
     </div>
     <div class="modal-footer d-flex justify-content-around align-items-center">
-        <h6>Total Sales: 50000$</h6>
         <div>
-            <button type="button" class="btn btn-primary btn-sm" [routerLink]="['/admin/product', pickedCategory!.id]">Add
+            <button type="button" class="btn btn-primary btn-sm"
+                [routerLink]="['/admin/product', pickedCategory!.id]">Add
                 Item</button>
+            <button type="button" class="btn btn-success btn-sm ms-2"
+                [routerLink]="['/admin/products', pickedCategory!.id]">View
+                Items</button>
             <button type="button" class="btn btn-warning btn-sm ms-2">Manage Stock</button>
             <button type="button" class="btn btn-secondary btn-sm ms-2">View Sales</button>
 

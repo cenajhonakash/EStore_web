@@ -114,25 +114,24 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="manageCheckbox">
-                                Do you want to update the stock details for the item?
+                        <div class="form-check mt-4">
+                            <input type="checkbox" class="form-check-input" id="deleteImage" [checked]="product.active"
+                                (change)="product.active = !product.active">
+                            <label class="form-check-label" for="deleteImage">
+                                Mark Active
                             </label>
-                            <select class="form-control" id="manage" [(ngModel)]="product.manage" name="manage">
-                                <option value="NA">NA</option>
-                                <option value="No">No</option>
-                                <option value="Yes">Yes</option>
-                            </select>
                         </div>
                     </div>
                 </div>
 
                 <div class="d-flex justify-content-center mt-3">
                     <!-- Submit Button -->
-                    <button type="submit" class="btn btn-success btn-block" [disabled]="!productForm.valid || (_loader.isLoading | async)">
+                    <button type="submit" class="btn btn-success btn-block"
+                        [disabled]="!productForm.valid || (_loader.isLoading | async)">
                         Add Product
                     </button>
-                    <button type="reset" class="btn btn-primary btn-block ms-2" [disabled]="(_loader.isLoading | async)">
+                    <button type="reset" class="btn btn-primary btn-block ms-2"
+                        [disabled]="(_loader.isLoading | async)">
                         Reset
                     </button>
                 </div>

@@ -35,7 +35,7 @@ const routes: Routes = [
     path: "admin", component: StoreManagementComponent, title: "Estore | Manage", canActivate: [storeManagementGuardGuard]
     , children: [{ path: "dash", component: AdmindashComponent }, { path: "category", component: AddCategoryComponent }, { path: "product", component: AddProductComponent }
       , { path: "product/:cId", component: AddProductComponent }
-      , { path: "categories", component: ViewCategoriesComponent }, { path: "products", component: ViewProductsComponent }, { path: "sales", component: ViewSalesComponent }
+      , { path: "categories", component: ViewCategoriesComponent }, { path: "products/:cId", component: ViewProductsComponent }, { path: "products", component: ViewProductsComponent }, { path: "sales", component: ViewSalesComponent }
       , { path: "stock", component: StockComponent }, { path: "products", component: ViewProductsComponent }, { path: "orders", component: ViewOrdersComponent }
       , { path: "approvals", component: ApprovalsComponent }
     ]

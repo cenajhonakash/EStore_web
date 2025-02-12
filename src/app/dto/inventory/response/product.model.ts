@@ -12,6 +12,7 @@ export class ItemResponse {
     public cId: string,
     public addedDate: any,
     public updateDate: any,
-    public images: String[]
+    public images: String[],
+    public active: boolean = true
   ) { }
 }

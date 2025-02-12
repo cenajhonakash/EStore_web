@@ -9,6 +9,7 @@ export class ItemRequest {
         public quantity: number | undefined,
         public imageUrl: string,
         public manage = false,
-        public deleteOldImages = false
+        public deleteOldImages = false,
+        public active = true
     ) { }
 }

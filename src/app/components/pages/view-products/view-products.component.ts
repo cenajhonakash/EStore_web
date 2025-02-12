@@ -1,4 +1,5 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
@@ -25,9 +26,10 @@ export class ViewProductsComponent implements OnInit {
   isAdmin: any;
   toUpdateItem: ItemRequest = new ItemRequest(undefined, '', '', '', undefined, undefined, undefined, '')
   images: ImageDetails[] = [];
+  cId: any;
 
   constructor(private _toast: ToastrService, private _categoryService: CategoryService, public _loader: LoaderService, private _helper: AppHelper, private modalService: NgbModal
-    , private _pStore: Store<{ products: ItemResponse[] }>, private _productService: ProductService) { }
+    , private _pStore: Store<{ products: ItemResponse[] }>, private _productService: ProductService, private _route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this._pStore.select("products").subscribe({
@@ -51,6 +53,13 @@ export class ViewProductsComponent implements OnInit {
         }
       }
     })
+
+    this.cId = this._route.snapshot.paramMap.get('cId')
+    console.log('category id from router: ' + this.cId)
+    if (this.cId) {
+      this.products = this.products.filter(p => p.cId === this.cId)
+      this.modalService.dismissAll()
+    }
   }
 
   open(content: any, item: ItemResponse) {
