@@ -37,6 +37,7 @@ export class ViewProductsComponent implements OnInit {
         if (products.length > 0) {
           console.log('Products already in store')
           this.products = products
+          this.validateAndFilterProductForCategory()
         } else {
           console.log('Loading category from backend')
           this._productService.getAllProducts().subscribe({
@@ -44,6 +45,7 @@ export class ViewProductsComponent implements OnInit {
               this.products = data
               if (this.products.length > 0)
                 this._pStore.dispatch(setProducts({ products: this.products }))
+              this.validateAndFilterProductForCategory()
             },
             error: (error) => {
               console.log('error loading category' + error)
@@ -53,13 +55,6 @@ export class ViewProductsComponent implements OnInit {
         }
       }
     })
-
-    this.cId = this._route.snapshot.paramMap.get('cId')
-    console.log('category id from router: ' + this.cId)
-    if (this.cId) {
-      this.products = this.products.filter(p => p.cId === this.cId)
-      this.modalService.dismissAll()
-    }
   }
 
   open(content: any, item: ItemResponse) {
@@ -103,4 +98,14 @@ export class ViewProductsComponent implements OnInit {
       }).filter(file => file.previewImage != '');
     }
   }
+
+  private validateAndFilterProductForCategory() {
+    this.cId = this._route.snapshot.paramMap.get('cId')
+    console.log('category id from router: ' + this.cId)
+    if (this.cId) {
+      this.products = this.products.filter(p => p.cId === this.cId)
+      this.modalService.dismissAll()
+    }
+  }
 }
+
