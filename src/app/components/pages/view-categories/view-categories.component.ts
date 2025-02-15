@@ -2,12 +2,14 @@ import { Component, OnInit, signal, TemplateRef, WritableSignal } from '@angular
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { select, Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
-import { switchMap, take } from 'rxjs';
+import { lastValueFrom, switchMap, take } from 'rxjs';
 import { CategoryRequest } from 'src/app/dto/inventory/request/category-request.model';
 import { CategoryResponse } from 'src/app/dto/inventory/response/category.model';
+import { ItemResponse } from 'src/app/dto/inventory/response/product.model';
 import { LoaderService } from 'src/app/service/common/loader.service';
 import { CategoryService } from 'src/app/service/inventory/category.service';
 import { setCategories } from 'src/app/store/inventory/category.action';
+import { setProducts } from 'src/app/store/inventory/product.action';
 import { AppHelper } from 'src/app/util/helper';
 
 @Component({
@@ -23,7 +25,7 @@ export class ViewCategoriesComponent implements OnInit {
   toUpdateCategory: CategoryRequest = new CategoryRequest('', '', '')
 
   constructor(private _toast: ToastrService, private _categoryService: CategoryService, public _loader: LoaderService, private _helper: AppHelper, private modalService: NgbModal
-    , private _cStore: Store<{ categories: CategoryResponse[] }>
+    , private _cStore: Store<{ categories: CategoryResponse[] }>, private _pStore: Store<{ products: ItemResponse[] }>
   ) { }
 
   ngOnInit(): void {
@@ -72,6 +74,7 @@ export class ViewCategoriesComponent implements OnInit {
             this.modalService.dismissAll();
             this.categories = this.categories.filter(c => c.id != category.id);
             this._cStore.dispatch(setCategories({ categories: this.categories }))
+            this.deleteProductFromStoreForCategory(category.id)
           },
           error: error => {
             console.log('error creating category' + error)
@@ -94,6 +97,17 @@ export class ViewCategoriesComponent implements OnInit {
       error: error => {
         console.log('error updating category' + error)
         this._toast.error('Error updating category: ' + this.pickedCategory!.name, 'Warning', { positionClass: 'toast-center-center', timeOut: 3000 })
+      }
+    });
+  }
+
+  private deleteProductFromStoreForCategory(cId: String) {
+    console.log('inside private method deleteProductFromStoreForCategory')
+    var products = lastValueFrom(this._pStore.pipe(select("products"), take(1)));
+    products.then((result) => {
+      console.log('Deleting product')
+      if (result.length > 0) {
+        this._pStore.dispatch(setProducts({ products: result.filter(p => p.cId != cId) }));
       }
     });
   }

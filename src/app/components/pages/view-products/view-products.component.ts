@@ -27,6 +27,8 @@ export class ViewProductsComponent implements OnInit {
   toUpdateItem: ItemRequest = new ItemRequest(undefined, '', '', '', undefined, undefined, undefined, '')
   images: ImageDetails[] = [];
   cId: any;
+  searchQuery: string = '';
+  filteredProducts: ItemResponse[] = []
 
   constructor(private _toast: ToastrService, private _categoryService: CategoryService, public _loader: LoaderService, private _helper: AppHelper, private modalService: NgbModal
     , private _pStore: Store<{ products: ItemResponse[] }>, private _productService: ProductService, private _route: ActivatedRoute) { }
@@ -79,6 +81,7 @@ export class ViewProductsComponent implements OnInit {
     })
   }
 
+  deleteProduct(itemId: string) { }
   // Handle image selection
   onImageChange(event: any) {
     const files: FileList = event.target.files;
@@ -96,6 +99,22 @@ export class ViewProductsComponent implements OnInit {
         }
         return { previewImage: '', file: undefined }
       }).filter(file => file.previewImage != '');
+    }
+  }
+
+  filterProducts() {
+    if (this.searchQuery.trim() === '') {
+      this._pStore.select("products").subscribe({
+        next: products => {
+          this.products = products
+        }
+      })
+    } else {
+      this.products = this.products.filter(product =>
+        product.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+        product.description.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+        product.brand.toLowerCase().includes(this.searchQuery.toLowerCase())
+      );
     }
   }
 

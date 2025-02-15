@@ -11,3 +11,16 @@
 .card {
     max-height: fit-content;
 }
+
+/* Ensures the search bar is centered */
+.search-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.form-control {
+    max-width: 500px;
+    width: 100%;
+}
