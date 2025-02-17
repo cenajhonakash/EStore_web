@@ -35,4 +35,13 @@ export class CategoryService {
   updateCategory(category: CategoryRequest, cId: any) {
     return this._http.put<CategoryResponse>(this.url + '/' + cId, category, { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) });
   }
+
+  updateCat(category: CategoryRequest, cId: any, images: ImageDetails[]) {
+    const fdata = new FormData()
+    fdata.append('category', new Blob([JSON.stringify(category)], { type: 'application/json' }));
+    images.forEach(file => {
+      fdata.append('otherImages', file!.file as Blob, file.file!.name)
+    });
+    return this._http.put<CategoryResponse>(this.url + '/' + cId, fdata);
+  }
 }

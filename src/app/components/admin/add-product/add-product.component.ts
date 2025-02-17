@@ -91,7 +91,9 @@ export class AddProductComponent implements OnInit {
             console.log('index is: ' + ind)
             const catexis = this.categories[ind];
             // console.log('Category is : '+JSON.stringify(catexis))
-            const itemCount: number = +catexis.totalItems + 1
+            let itemCount: number = 1
+            if (catexis.totalItems)
+              itemCount = +catexis.totalItems + 1
             const newCat = new CategoryResponse(catexis.name, catexis.about, catexis.coverImage, catexis.id, [], catexis.images, itemCount + '');
             // const newCat = new CategoryResponse(catexis.name, catexis.about, catexis.coverImage, catexis.id, this.categories[ind] ? this.categories[ind].products.concat(data) : [data], catexis.images, catexis.totalItems);
 

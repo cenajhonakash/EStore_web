@@ -24,3 +24,20 @@
     max-width: 500px;
     width: 100%;
 }
+
+/* Ensure pagination container does not overflow */
+.d-flex.justify-content-center {
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+}
+
+/* Pagination itself */
+ngb-pagination {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    /* This ensures pagination wraps to next line on smaller screens */
+    margin-top: 20px
+}

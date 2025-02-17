@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
+import { AppConstants } from 'src/app/constants/app-constants';
 import { ImageDetails } from 'src/app/dto/imageDetails.model';
 import { ItemRequest } from 'src/app/dto/inventory/request/item-request.model';
 import { CategoryResponse } from 'src/app/dto/inventory/response/category.model';
@@ -30,33 +31,51 @@ export class ViewProductsComponent implements OnInit {
   searchQuery: string = '';
   filteredProducts: ItemResponse[] = []
 
+  // sortedBy: string = 'name'; // Default sorting by name
+  currentPage: number = 1;
+  itemsPerPage: number = 10; // Number of products per page
+  page: number = AppConstants.DEFAULT_PAGE_NUMBER;
+  pageSize: number = AppConstants.PAGE_SIZE;  // Initial page size
+  collectionSize: number = AppConstants.MAX_ITEM_SIZE; // Total number of items
+
   constructor(private _toast: ToastrService, private _categoryService: CategoryService, public _loader: LoaderService, private _helper: AppHelper, private modalService: NgbModal
     , private _pStore: Store<{ products: ItemResponse[] }>, private _productService: ProductService, private _route: ActivatedRoute) { }
 
+  // ngOnInit(): void {
+  //   this._pStore.select("products").subscribe({
+  //     next: products => {
+  //       if (products.length > 0) {
+  //         console.log('Products already in store')
+  //         this.products = products
+  //         this.validateAndFilterProductForCategory()
+  //       } else {
+  //         console.log('Loading category from backend')
+  //         this._productService.getAllProducts().subscribe({
+  //           next: (data) => {
+  //             this.products = data
+  //             if (this.products.length > 0)
+  //               this._pStore.dispatch(setProducts({ products: this.products }))
+  //             this.validateAndFilterProductForCategory()
+  //           },
+  //           error: (error) => {
+  //             console.log('error loading category' + error)
+  //             this._toast.error('Error loading category', 'Warning', { positionClass: 'toast-center-center', timeOut: 3000 })
+  //           }
+  //         });
+  //       }
+  //     }
+  //   })
+  // }
+
   ngOnInit(): void {
-    this._pStore.select("products").subscribe({
-      next: products => {
-        if (products.length > 0) {
-          console.log('Products already in store')
-          this.products = products
-          this.validateAndFilterProductForCategory()
-        } else {
-          console.log('Loading category from backend')
-          this._productService.getAllProducts().subscribe({
-            next: (data) => {
-              this.products = data
-              if (this.products.length > 0)
-                this._pStore.dispatch(setProducts({ products: this.products }))
-              this.validateAndFilterProductForCategory()
-            },
-            error: (error) => {
-              console.log('error loading category' + error)
-              this._toast.error('Error loading category', 'Warning', { positionClass: 'toast-center-center', timeOut: 3000 })
-            }
-          });
-        }
-      }
-    })
+    console.log('Loading Products')
+
+    this.cId = this._route.snapshot.paramMap.get('cId')
+    console.log('category id from router: ' + this.cId)
+    if (this.cId) {
+      this.validateAndFilterProductForCategory()
+    } else
+      this.loadProducts()
   }
 
   open(content: any, item: ItemResponse) {
@@ -118,13 +137,49 @@ export class ViewProductsComponent implements OnInit {
     }
   }
 
+  // private validateAndFilterProductForCategory() {
+  //   this.cId = this._route.snapshot.paramMap.get('cId')
+  //   console.log('category id from router: ' + this.cId)
+  //   if (this.cId) {
+  //     this.products = this.products.filter(p => p.cId === this.cId)
+  //     this.modalService.dismissAll()
+  //   }
+  // }
+
   private validateAndFilterProductForCategory() {
+    this._productService.getProductsForCategory(this.cId, this.page, this.pageSize).subscribe({
+      next: products => {
+        if (products.length > 0)
+          this.products = products
+      }, error: error => {
+        console.log('error loading category' + error)
+        this._toast.error('Error loading category', 'Warning', { positionClass: 'toast-center-center', timeOut: 3000 })
+      }
+    })
+    this.products = this.products.filter(p => p.cId === this.cId)
+    this.modalService.dismissAll()
+  }
+
+  loadProducts() {
+    this._productService.getProducts(this.page, this.pageSize).subscribe({
+      next: products => {
+        if (products.length > 0)
+          this.products = products
+      }, error: error => {
+        console.log('error loading category' + error)
+        this._toast.error('Error loading category', 'Warning', { positionClass: 'toast-center-center', timeOut: 3000 })
+      }
+    })
+  }
+
+  onPageChange(number: any) {
+    console.log('on page: ' + number)
     this.cId = this._route.snapshot.paramMap.get('cId')
     console.log('category id from router: ' + this.cId)
     if (this.cId) {
-      this.products = this.products.filter(p => p.cId === this.cId)
-      this.modalService.dismissAll()
-    }
+      this.validateAndFilterProductForCategory()
+    } else
+      this.loadProducts()
   }
 }
 
