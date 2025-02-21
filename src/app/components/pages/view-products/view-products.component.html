@@ -16,21 +16,21 @@
             <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
         </div>
         <div class="col-md-6 mb-4" *ngFor="let c of products">
-            <div class="card shadow-sm">
+            <div class="card shadow-sm product-card">
                 <!--<img [src]="c.coverImage" class="card-img-top cover-image" alt="Category" />-->
                 <div class="row">
                     <div class="col-5">
                         <ngb-carousel>
                             <ng-template ngbSlide *ngFor="let im of c.images">
                                 <div class="picsum-img-wrapper">
-                                    <img [src]="im" class="cover-image" alt="Random first slide" />
+                                    <img [src]="im" class="cover-image" alt="Random first slide" (click)="openImageModal(imageModal, im)"/>
                                 </div>
                             </ng-template>
                         </ngb-carousel>
                     </div>
                     <div class="col-7" (click)="open(manage, c)">
                         <div class="card-body">
-                            <h6 class="card-title mt-1"><strong>{{c.name}}</strong></h6>
+                            <h6 class="card-title mt-1"><strong>{{c.name | slice : 0: 40}}</strong></h6>
                             <!--<p class="card-text">{{c.description | slice : 0 : 50}}</p>-->
                             <p class="card-text"><strong>Brand: </strong>{{c.brand}}</p>
                             <!-- <p class="card-text d-flex align-items-center"> -->
@@ -42,7 +42,7 @@
                             </p>
                             <p class="card-text"><strong>Quantity: </strong>{{c.quantity}}</p>
                             <!--<p class="card-text"><strong>Price: </strong>{{c.price}}</p>-->
-                            <p class="card-text"><strong>About: </strong>{{c.description | slice : 0 : 250}}</p>
+                            <p class="card-text description-preview"><strong>About: </strong>{{c.description | slice : 0 : 300}}</p>
                         </div>
                     </div>
                 </div>
@@ -199,4 +199,13 @@
                 <button type="reset" class="btn btn-secondary ms-2">Reset</button>
             </div>
         </form>
+    </ng-template>
+
+    <ng-template #imageModal let-modal>
+        <div class="modal-header">
+            <button type="button" class="close" (click)="modal.dismiss('Cross click')">&times;</button>
+        </div>
+        <div class="modal-body picsum-img-wrapper image-container">
+            <img [src]="selectedImage" alt="Full Size Image" class="img-fluid popped-image">
+        </div>
     </ng-template>

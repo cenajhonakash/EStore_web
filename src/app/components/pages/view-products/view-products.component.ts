@@ -38,6 +38,8 @@ export class ViewProductsComponent implements OnInit {
   pageSize: number = AppConstants.PAGE_SIZE;  // Initial page size
   collectionSize: number = AppConstants.MAX_ITEM_SIZE; // Total number of items
 
+  selectedImage: string = '';
+
   constructor(private _toast: ToastrService, private _categoryService: CategoryService, public _loader: LoaderService, private _helper: AppHelper, private modalService: NgbModal
     , private _pStore: Store<{ products: ItemResponse[] }>, private _productService: ProductService, private _route: ActivatedRoute) { }
 
@@ -123,11 +125,14 @@ export class ViewProductsComponent implements OnInit {
 
   filterProducts() {
     if (this.searchQuery.trim() === '') {
-      this._pStore.select("products").subscribe({
-        next: products => {
-          this.products = products
-        }
-      })
+      console.log('No search query passed. Loading all products')
+      // this._pStore.select("products").subscribe({
+      //   next: products => {
+      //     console.log('No search query passed. Loading all products')
+      //     this.products = products
+      //   }
+      // })
+      this.loadProducts()
     } else {
       this.products = this.products.filter(product =>
         product.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
@@ -180,6 +185,11 @@ export class ViewProductsComponent implements OnInit {
       this.validateAndFilterProductForCategory()
     } else
       this.loadProducts()
+  }
+
+  openImageModal(content: any, imageUrl: any) {
+    this.selectedImage = imageUrl
+    this.modalService.open(content,  { ariaLabelledBy: 'modal-basic-title', centered: true });
   }
 }
 

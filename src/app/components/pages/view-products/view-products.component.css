@@ -41,3 +41,38 @@ ngb-pagination {
     /* This ensures pagination wraps to next line on smaller screens */
     margin-top: 20px
 }
+
+.image-container:hover .popped-image {
+    transform: scale(1.3);
+    /* Enlarge the image */
+    opacity: 1;
+}
+
+.picsum-img-wrapper {
+    position: relative;
+    overflow: hidden;
+}
+
+.image-container {
+    position: relative;
+    display: inline-block;
+    cursor: pointer; /* Make it clickable for the hover effect */
+}
+
+/* Make sure the card has position relative for the overlay */
+.product-card {
+    position: relative;
+}
+
+/* Style for the preview of the description */
+.description-preview {
+    display: block;
+    color: #555;
+    font-size: 14px;
+}
+
+/* Optionally, style the card to add some visual effects on hover */
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
