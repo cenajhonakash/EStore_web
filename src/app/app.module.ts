@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HomeComponent } from './components/pages/home/home.component';
+import { HomeComponent } from './components/pages/customer/home/home.component';
 import { AboutComponent } from './components/pages/about/about.component';
 import { NavbarComponent } from './components/common/navbar/navbar.component';
 import { FooterComponent } from './components/pages/footer/footer.component';
@@ -17,13 +17,12 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { NetworkinterceptorService } from './service/common/networkinterceptor.service';
 import { KeycloakService } from './service/security/keycloak.service';
-import { CartComponent } from './components/pages/cart/cart.component';
-import { WishlistComponent } from './components/pages/wishlist/wishlist.component';
+import { CartComponent } from './components/pages/customer/cart/cart.component';
+import { WishlistComponent } from './components/pages/customer/wishlist/wishlist.component';
 import { OrderHistoryComponent } from './components/pages/order-history/order-history.component';
-import { ProductComponent } from './components/pages/product/product.component';
+import { ProductComponent } from './components/pages/customer/product/product.component';
 import { StoreManagementComponent } from './components/admin/store-management/store-management.component';
 import { StoreManagerDashComponent } from './components/admin/store-manager-dash/store-manager-dash.component';
-import { CategoryComponent } from './components/pages/category/category.component';
 import { AdmindashComponent } from './components/admin/admindash/admindash.component';
 import { AddProductComponent } from './components/admin/add-product/add-product.component';
 import { AddCategoryComponent } from './components/admin/add-category/add-category.component';
@@ -37,6 +36,7 @@ import { IconModule } from './components/common/icon.module';
 import { StoreModule } from '@ngrx/store';
 import { categoryReducer } from './store/inventory/category.reducer';
 import { productReducer } from './store/inventory/product.reducer';
+import { userReducer } from './store/user.reducer';
 
 @NgModule({
   declarations: [
@@ -53,7 +53,6 @@ import { productReducer } from './store/inventory/product.reducer';
     ProductComponent,
     StoreManagementComponent,
     StoreManagerDashComponent,
-    CategoryComponent,
     AdmindashComponent,
     AddProductComponent,
     AddCategoryComponent,
@@ -74,7 +73,7 @@ import { productReducer } from './store/inventory/product.reducer';
     HttpClientModule,
     MatProgressBarModule,
     IconModule,
-    StoreModule.forRoot({ categories: categoryReducer, products: productReducer })
+    StoreModule.forRoot({ categories: categoryReducer, products: productReducer, user: userReducer })
   ],
   providers: [
     {

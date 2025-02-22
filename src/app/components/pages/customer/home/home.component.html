@@ -1,0 +1,74 @@
+<div class="admin">
+    <div class="sidebar d-flex flex-column justify-content-between border bg-dark">
+       <!--<h4 class="text-success text-center mt-1 px-2">Manage</h4>--> 
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a href="" class="nav-link text-white" [routerLink]="['/customer/categories']" routerLinkActive="active">
+                    <i-tabler name="category"></i-tabler>
+                    <span class="ms-2 pt-1">Categories</span>
+                </a>
+            </li>         
+            <li class="nav-item">
+                <a href="" class="nav-link text-white" [routerLink]="['/customer/products']" routerLinkActive="active">
+                    <i-tabler name="building-store"></i-tabler>
+                    <span class="ms-2 pt-1">Products</span>
+                </a>
+            </li> 
+            <li class="nav-item">
+                <a href="" class="nav-link text-white" [routerLink]="['/customer/offers']" routerLinkActive="active">
+                    <i-tabler name="building-store"></i-tabler>
+                    <span class="ms-2 pt-1">Offers</span>
+                </a>
+            </li>          
+            <li class="nav-item">
+                <a href="" class="nav-link text-white" [routerLink]="['/customer/orders']" routerLinkActive="active">
+                    <i-tabler name="truck-delivery"></i-tabler>
+                    <span class="ms-2 pt-1">My Orders</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="" class="nav-link text-white" [routerLink]="['/customer/track-order']" routerLinkActive="active">
+                    <i-tabler name="report-money"></i-tabler>
+                    <span class="ms-2 pt-1">Track Orders</span>
+                </a>
+            </li>         
+            <li class="nav-item">
+                <a href="" class="nav-link text-white" [routerLink]="['/customer/cart']" routerLinkActive="active">
+                    <i-tabler name="square-rounded-check"></i-tabler>
+                    <span class="ms-2 pt-1">Cart</span>
+                </a>
+            </li>   
+            <li class="nav-item">
+                <a href="" class="nav-link text-white" [routerLink]="['/customer/wishlist']" routerLinkActive="active">
+                    <i-tabler name="square-rounded-check"></i-tabler>
+                    <span class="ms-2 pt-1">Wishlist</span>
+                </a>
+            </li>   
+            <li class="nav-item">
+                <a href="" class="nav-link text-white" [routerLink]="['/customer/approvals']" routerLinkActive="active">
+                    <i-tabler name="square-rounded-check"></i-tabler>
+                    <span class="ms-2 pt-1">Update Profile</span>
+                </a>
+            </li>    
+            <li class="nav-item">
+                <a href="" class="nav-link text-white">
+                    <i-tabler name="logout"></i-tabler>
+                    <span class="ms-2 pt-1">Logout</span>
+                </a>
+            </li>                          
+        </ul>
+        <ul class="nav flex-column mb-5">
+            <li class="nav-item">
+                <a href="" class="nav-link text-white" [routerLink]="['/admin/approvals']" routerLinkActive="active">
+                    <i-tabler name="help-circle"></i-tabler>
+                    <span class="ms-2">Reach Us</span>
+                </a>
+            </li>             
+        </ul>
+    </div>
+    <div class="content px-2 py-2">
+        <div class="container">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
 import Keycloak from 'keycloak-js';
 import { UserProfile } from 'src/app/dto/user-profile';
+import { setUser } from 'src/app/store/user.action';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +12,7 @@ export class KeycloakService {
   private _keycloak: Keycloak | undefined
   private _userProfile: UserProfile | undefined
 
-  constructor() { }
+  constructor(private _userStore: Store<{ user: UserProfile }>) { }
 
   async init() {
     console.log('Intitalizing Keycloak server')
@@ -24,6 +26,8 @@ export class KeycloakService {
       //console.log('user authenticated successfully!'+JSON.stringify(this._keycloak?.tokenParsed))
       this._userProfile.token = this._keycloak?.token
       this._userProfile.roles = this._keycloak?.realmAccess?.roles
+
+      this._userStore.dispatch(setUser({ user: this._userProfile }))
       // console.log('roles from KY: ' + this._keycloak?.realmAccess?.roles)
       // console.log('User details: '+ this._userProfile.roles)
     }
@@ -43,7 +47,7 @@ export class KeycloakService {
   }
 
   // Fetch logged in user details from Keycloak server
-  get getUserDetails() : UserProfile | undefined {
+  get getUserDetails(): UserProfile | undefined {
     return this._userProfile
   }
 
@@ -57,7 +61,7 @@ export class KeycloakService {
     return this._keycloak?.logout()
   }
 
-   public userHasRole(roleName: string) {
+  public userHasRole(roleName: string) {
     return this._keycloak?.hasRealmRole(roleName)
   }
 }
